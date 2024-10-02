@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task one</title>
+</head>
+<body>
+<form action="https://zwa.toad.cz/~xklima/vypisform.php" method="post">
+    <label for="name">Name: </label>
+    <input type="text" id="name" name="name"><br>
+
+    <label for="surname">Surname: </label>
+    <input type="text" id="surname" name="surname"><br>
+
+    <label for="email">Email: </label>
+    <input type="email" id="email" name="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"><br>
+
+    <label for="age">Age: </label>
+    <input type="number" id="age" name="age"><br>
+
+    <label for="sex">Sex: </label>
+    <select id="sex" name="sex">
+        <option value =“male“>Male</option>
+        <option value =“female“>Female</option>
+    </select><br>
+
+    <label for="courses">Courses: </label>
+    <select id="courses" name="courses[]" MULTIPLE>
+        <option value =“zwa“>ZWA</option>
+        <option value =“maa“>MAA</option>
+        <option value =“lag“>LAG</option>
+        <option value =“omo“>OMO</option>
+        <option value =“pm2“>PM2</option>
+    </select><br>
+
+    <fieldset>
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Password" id="password" required><br>
+
+        <label for="confirm password">Password</label>
+        <input type="password" placeholder="Confirm password" id="confirm password" required><br>
+    </fieldset>
+
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
+<script>
+    let name = document.getElementById("name");
+    let surname = document.getElementById("surname");
+    let email = document.getElementById("email");
+    let age = document.getElementById("age");
+    let sex = document.getElementById("sex");
+    let courses = document.getElementById("courses");
+    let password = document.getElementById("password");
+    let confirm_password = document.getElementById("confirm password");
+</script>
