@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework two</title>
+</head>
+<body>
+<form action="" method="post">
+    <label for="name">Name: </label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="surname">Surname: </label>
+    <input type="text" id="surname" name="surname"> required<br><br>
+
+    <label for="email">Email: </label>
+    <input type="email" id="email" name="email"><br><br>
+
+    <label for="comment">Comment </label>
+    <input type="text" name="comment" id="comment" required><br><br>
+
+    <label for="image">Image: </label>
+    <input type="file" name="image" id="image" required><br><br>
+
+    <input type="submit" value="Submit"><br>
+</form>
+</body>
+</html>
+<!--
+<script>
+    const name = document.getElementById('name');
+    const surname = document.getElementById('surname');
+    const email = document.getElementById('email');
+    const comment = document.getElementById('comment');
+    const image = document.getElementById('image');
+    let errors = [];
+
+    function loadValidation() {
+        name.setCustomValidity('Please enter real name');
+        name.checkValidity();
+
+        /*if (surname.value.length === 0 || !surname.value.match(/^[A-Za-z]+$/)) {
+            surname.setCustomValidity('Please enter real surname');
+            surname.checkValidity();
+            errors.push("Please enter real surname");
+        }
+
+        if (email.value.length === 0 || !email.value.match("[^@\s]+@[^@\s]+\.[^@\s]+")) {
+            email.setCustomValidity('Please enter valid email');
+            email.checkValidity();
+            errors.push("Please enter valid email");
+        }
+
+        if (comment.value.length === 0) {
+            comment.setCustomValidity('Please enter comment');
+            comment.checkValidity();
+            errors.push("Please enter comment");
+        }
+
+        if (image.files.size === 0) {
+            image.setCustomValidity('Please choose image');
+            image.checkValidity();
+            errors.push("Please choose image");
+        }*/
+    }
+
+    function checkInput() {
+        if (name.value.length === 0 || !name.value.match(/^[A-Za-z]+$/)) {
+            name.setCustomValidity('Please enter real name');
+            name.checkValidity();
+            errors.push("Please enter real name");
+        }
+
+        if (surname.value.length === 0 || !surname.value.match(/^[A-Za-z]+$/)) {
+            surname.setCustomValidity('Please enter real surname');
+            surname.checkValidity();
+            errors.push("Please enter real surname");
+        }
+
+        if (email.value.length === 0 || !email.value.match("[^@\s]+@[^@\s]+\.[^@\s]+")) {
+            email.setCustomValidity('Please enter valid email');
+            email.checkValidity();
+            errors.push("Please enter valid email");
+        }
+
+        if (comment.value.length === 0) {
+            comment.setCustomValidity('Please enter comment');
+            comment.checkValidity();
+            errors.push("Please enter comment");
+        }
+
+        if (image.files.size === 0) {
+            image.setCustomValidity('Please choose image');
+            image.checkValidity();
+            errors.push("Please choose image");
+        }
+        return errors.length <= 0;
+    }
+
+    function updateForm() {
+        name.setCustomValidity("");
+        surname.setCustomValidity("");
+        email.setCustomValidity("");
+        comment.setCustomValidity("");
+        image.setCustomValidity("");
+    }
+</script>-->
