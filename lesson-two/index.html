@@ -5,7 +5,8 @@
     <title>Task one</title>
 </head>
 <body>
-<form action="https://zwa.toad.cz/~xklima/vypisform.php" method="post">
+<form id="form" action="https://zwa.toad.cz/~xklima/vypisform.php" method="post"
+      onsubmit="return checkElements();" onchange="updateElements();">
     <label for="name">Name: </label>
     <input type="text" id="name" name="name"><br>
 
@@ -13,7 +14,7 @@
     <input type="text" id="surname" name="surname"><br>
 
     <label for="email">Email: </label>
-    <input type="email" id="email" name="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"><br>
+    <input type="email" id="email" name="email"><br>
 
     <label for="age">Age: </label>
     <input type="number" id="age" name="age"><br>
@@ -31,15 +32,18 @@
         <option value =“lag“>LAG</option>
         <option value =“omo“>OMO</option>
         <option value =“pm2“>PM2</option>
-    </select><br>
+    </select><br><br>
 
     <fieldset>
         <label for="password">Password</label>
-        <input type="password" name="password" placeholder="Password" id="password" required><br>
+        <input type="password" name="password" placeholder="Password" id="password"><br>
 
         <label for="confirm password">Password</label>
-        <input type="password" placeholder="Confirm password" id="confirm password" required><br>
-    </fieldset>
+        <input type="password" placeholder="Confirm password" id="confirm password"><br>
+
+    </fieldset> <br>
+
+    <div id="errorMessages"></div>
 
     <input type="submit" value="Submit">
 </form>
@@ -54,4 +58,34 @@
     let courses = document.getElementById("courses");
     let password = document.getElementById("password");
     let confirm_password = document.getElementById("confirm password");
+    let error = document.getElementById("errorMessages");
+    let errors = []
+
+    function checkElements() {
+        if (name.value === "") {
+            errors.push("Name is required");
+        }
+        if (surname.value === "") {
+            errors.push("Surname is required");
+        }
+        if (!email.value.match("[^@\s]+@[^@\s]+\.[^@\s]+")) {
+            errors.push("Enter valid email");
+        }
+        if (password.value !== confirm_password.value || password.value.length === 0) {
+            confirm_password.setCustomValidity("Passwords Don't Match!");
+            confirm_password.reportValidity();
+            if (errors.length > 0) {
+                error.innerHTML = errors.join("<br>");
+            }
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function updateElements() {
+        confirm_password.setCustomValidity("");
+        error.innerHTML = "";
+    }
 </script>
