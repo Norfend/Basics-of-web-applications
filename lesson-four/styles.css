@@ -1,0 +1,37 @@
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+input {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+}
+
+input:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn {
+    background-color: #0056b3;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    color: #f0f0f0;
+}
+
+.submit-btn:hover {
+    background-color: #007bff;
+}
+
+label {
+    display: block;
+    color: rebeccapurple;
+}
