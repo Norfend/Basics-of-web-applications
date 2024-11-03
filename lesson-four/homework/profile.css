@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #eed452, #3cabe7, #5ff350, #b0e6dc);
+    background-size: 400% 400%;
+    animation: gradient 100s normal;
+    height: 100vh;
+}
+
+/*@keyframes gradient {
+    0% {
+        background-position: 0 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}*/
+
+button {
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#profile-photo {
+    border-radius: 10%;
+    box-shadow: 1px 1px 20px black;
+}
+
+#change-button:hover {
+    background-color: #23a6d5;
+    box-shadow: 0 0 20px red;
+}
+
+#change-button:active {
+    background-color: #0056b3;
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
+}
