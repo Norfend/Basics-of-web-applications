@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Curriculum Vitae</title>
+    <title>Welcome Page</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="main-part">
-    <figure id="profile-photo">
-        <img src="Photo.jfif" alt="Uporov Egor.photo">
-    </figure><br>
+<div class="main-part">
+    <figure>
+        <img src="Photo.jfif" alt="Uporov Egor.photo" class="profile-photo">
+    </figure>
 
-    <label id="name">Uporov Egor</label><br>
-    <label id="moto">In Rust we trust</label>
+    <label class="name">Uporov Egor</label>
+    <label class="moto">Hey, how are you?</label>
 
-    <div id="links-part">
+    <div class="links-part">
         <form action="https://linkedin.com">
             <input id="linkedin" type="image" src="/lesson-five/LinkedIn.png" alt="linkedin.link" width="50" height="50"/>
         </form><br>
@@ -26,14 +26,14 @@
             <input id="twitter" type="image" src="/lesson-five/twitter.png" alt="twitter.link" width="50" height="50"/>
         </form>
     </div>
-
+</div>
+<div>
     <nav>
-        <button type="button" id="zivotopis">Životopis</button>
-        <button type="button" id="zajmy">Zájmy</button>
-        <button type="button" id="kariera">Kariera</button>
-        <button type="button" id="oblibene-predmety">Oblíbené předměty</button>
+        <a href="CV.html" class="zivotopis">Životopis</a>
+        <a href="index.html" class="zajmy">Zájmy</a>
+        <a href="index.html" class="kariera">Kariera</a>
+        <a href="index.html" class="oblibene-predmety">Oblíbené předměty</a>
     </nav>
 </div>
-
 </body>
 </html>

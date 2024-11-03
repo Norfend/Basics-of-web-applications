@@ -1,39 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-.profile-photo{
-    border-radius: 100px;
-    width: 200px;
-    height: 200px;
-}
-
-.moto {
-    font-style: italic;
-    font-size: 20px;
-    font-weight: normal;
-    padding-bottom: 10%;
-}
-
-.main-part {
+body {
     align-items: center;
-    border: black solid 1px;
     display: flex;
     flex-direction: column;
     font-family: 'Poppins', sans-serif;
-    font-weight: bolder;
-    font-size: 34px;
-    margin: auto;
-    max-width: 800px;
-    min-width: 400px;
-    width: 40vw;
-    gap: 5px;
 }
 
-.links-part {
-    border: black solid 1px;
+article {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    min-width: 400px;
+    width: 60vw;
+}
+
+.cv-part {
+    border: 1px solid black;
+}
+
+.second-part {
+    border: 1px solid black;
+}
+
+.picture {
+    float: right;
+    width: 20vw;
+    height: 20vw;
+}
+
+.second-part section {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    width: 70%;
 }
 
 nav {
@@ -43,6 +41,8 @@ nav {
     justify-content: space-around;
     height: 70px;
     margin-top: 10px;
+    position: sticky;
+    top: 0;
     width: 100vw;
 }
 
