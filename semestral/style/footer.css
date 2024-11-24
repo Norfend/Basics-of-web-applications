@@ -1,4 +1,7 @@
 .footer {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    line-height: 1.5;
     width: 100%; /* Full width */
     background-color: #333; /* Dark background color */
     color: #fff; /* White text */
