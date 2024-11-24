@@ -1,0 +1,42 @@
+.header {
+    width: 100%; /* Full width */
+    background-color: #333; /* Dark background color */
+    color: #fff; /* White text */
+    padding: 15px 0;
+    position: fixed; /* Fixed at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensures it stays above other elements */
+}
+
+.header-container {
+    width: 90%; /* Take 90% of the screen width */
+    max-width: 1200px; /* Limit the width for large screens */
+    margin: 0 auto; /* Center the content */
+    display: flex; /* Flex layout */
+    justify-content: space-between; /* Space between logo and nav */
+    align-items: center; /* Vertically align items */
+}
+
+.logo a {
+    color: #fff; /* White text */
+    text-decoration: none; /* Remove underline */
+    font-size: 1.5rem; /* Larger font size */
+    font-weight: bold; /* Bold text */
+}
+
+.nav-links {
+    display: flex; /* Horizontal layout */
+    gap: 20px; /* Space between links */
+}
+
+.nav-links a {
+    color: #fff; /* White text */
+    text-decoration: none; /* Remove underline */
+    font-size: 1rem; /* Standard font size */
+    transition: color 0.3s; /* Smooth color transition on hover */
+}
+
+.nav-links a:hover {
+    color: #f39c12; /* Highlight color on hover */
+}

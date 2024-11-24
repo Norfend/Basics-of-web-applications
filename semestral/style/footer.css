@@ -1,0 +1,14 @@
+.footer {
+    width: 100%; /* Full width */
+    background-color: #333; /* Dark background color */
+    color: #fff; /* White text */
+    padding: 15px 0; /* Spacing inside the footer */
+    text-align: center; /* Center-align text/content */
+    margin-top: auto; /* Push the footer to the bottom of the page */
+}
+
+.footer-container {
+    width: 90%; /* 90% of the viewport width */
+    max-width: 1200px; /* Limit width on large screens */
+    margin: 0 auto; /* Center content */
+}

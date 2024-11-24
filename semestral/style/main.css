@@ -1,0 +1,14 @@
+@import "header.css";
+@import "footer.css";
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    margin: 0;
+    padding: 60px 0 0 0;
+    min-height: 100vh; /* Ensures the body spans the full height of the viewport */
+    display: flex;
+    flex-direction: column; /* Allows header, main, and footer stacking */
+}
