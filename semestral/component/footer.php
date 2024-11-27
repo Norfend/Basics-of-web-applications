@@ -1,6 +1,6 @@
 <footer class="footer">
     <div class="footer-container">
-        <h1>This is footer</h1>
+        <p>&copy; 2024 My Cooking Website. All Rights Reserved.</p>
     </div>
 </footer>
 </body>
