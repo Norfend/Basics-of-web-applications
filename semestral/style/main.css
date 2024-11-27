@@ -1,8 +1,10 @@
 @import "header.css";
 @import "footer.css";
+@import "signup.css";
 
 body {
     display: flex;
+    font-family: "Montserrat", sans-serif;
     flex-direction: column;
     margin: 0;
     padding: 0;
@@ -10,7 +12,8 @@ body {
 }
 
 .main-content {
-    margin: 100px auto;
+    align-content: center;
+    margin: 100px auto 0;
     width: 60%;
     display: flex;
     flex-direction: column;
