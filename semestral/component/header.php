@@ -19,8 +19,8 @@
             <ul class="nav-links">
                 <li><a href="../index.php">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#recipes">Recipes</a></li>
-                <li><a href="../page/signup.php">Contact</a></li> <!--temporary link!!!!!!!-->
+                <li><a href="../page/signin.php">Sign in</a></li>
+                <li><a href="../page/signup.php">Sign up</a></li> <!--temporary link!!!!!!!-->
             </ul>
         </nav>
     </div>
