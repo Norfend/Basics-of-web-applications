@@ -1,4 +1,8 @@
 <?php
+namespace configuration;
+
+use PDO;
+use PDOException;
 
 class DatabaseConnection
 {
@@ -11,8 +15,9 @@ class DatabaseConnection
     private function __construct()
     {
         try {
-            $dsn = "mysql:host={$this->$_ENV["host"]};dbname={$this->$_ENV["dbName"]};charset={$this->$_ENV["charset"]}";
-            $this->connection = new PDO($dsn, $this->$_ENV["username"], $this->$_ENV["password"], [
+            $env = parse_ini_file('.env');
+            $dsn = "mysql:host={$env["host"]};dbname={$env["dbName"]}";
+            $this->connection = new PDO($dsn, $env["username"], $env["password"], [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Set error mode to exceptions
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,      // Fetch results as associative arrays
                 PDO::ATTR_PERSISTENT         => true                   // Persistent connection
