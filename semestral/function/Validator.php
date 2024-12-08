@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace helpful_function;
-include "../my_classes/Account.php";
-use my_classes\Account;
+namespace function;
+include "../entities/Account.php";
+use entities\Account;
 
 class Validator {
 
@@ -29,7 +29,7 @@ class Validator {
 
     public function validateAccountPost(string $firstName, string $lastName, string $username,
                                         string $email, string $password, string $confirm_password,
-                                        $avatar) : ?Account
+                                        array $avatar) : ?Account
     {
         if (! $this->validateName($firstName)) self::$errors[] = "First name is invalid";
         if (! $this->validateName($lastName)) self::$errors[] = "Last name is invalid";
@@ -37,10 +37,14 @@ class Validator {
         if (! $this->validateEmail($email)) self::$errors[] = "Email is invalid";
         if (! $this->validatePassword($password)) self::$errors[] = "Password is invalid";
         if ($password !== $confirm_password) self::$errors[] = "Passwords do not match";
-        if (! $this->validateImage($avatar)) self::$errors[] = "Avatar is invalid";
+        $this->validateImage($avatar);
         if (count(self::$errors) < 1) {
             $accountPassword = password_hash($password, PASSWORD_BCRYPT);
-            $accountAvatar = "avatar";
+            $filename = $username . '-' . pathinfo($avatar['name'], PATHINFO_FILENAME) . '.' . pathinfo($avatar['name'], PATHINFO_EXTENSION);
+            $uploadDir = '../upload/avatar';
+            $destination = $uploadDir . '/' . $filename;
+            move_uploaded_file($avatar['tmp_name'], $destination);
+            $accountAvatar = "$destination";
             return new Account($firstName, $lastName, $username, $email, $accountPassword, $accountAvatar);
         }
         else return null;
@@ -72,10 +76,34 @@ class Validator {
         else return false;
     }
 
-    public function validateImage($file) :bool
+    public function validateImage(array $file) :bool
     {
-/*        if (getimagesize($file)) return true;
-        else return false;*/
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            self::$errors[] = "File upload error: ";
+            return false;
+        }
+        if ($file['size'] > 1024 * 1024) {
+            self::$errors[] =  "File size exceeds the allowed limit of 1Kb";
+            return false;
+        }
+        if (!is_uploaded_file($file['tmp_name'])) {
+            self::$errors[] =  "The file was not uploaded via HTTP POST";
+            return false;
+        }
+        if (!str_starts_with(mime_content_type($file['tmp_name']), 'image/')) {
+            self::$errors[] =  "The uploaded file is not an image";
+            return false;
+        }
+        $imageInfo = getimagesize($file['tmp_name']);
+        if ($imageInfo === false) {
+            self::$errors[] =  "The file is not a valid image";
+            return false;
+        }
+        [$width, $height] = $imageInfo;
+        if ($width > 400 || $height > 400) {
+            echo "Image dimensions exceed the allowed limit of 400x400 pixels.";
+            return false;
+        }
         return true;
     }
 

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace my_classes;
+namespace entities;
 class Account
 {
     private string $firstName;

@@ -2,7 +2,7 @@
 require_once '../component/header.php';?>
 
 <main class="main-content">
-    <form action="../helpful_function/sign-up-action.php" method="POST" enctype="multipart/form-data" class="signup-form">
+    <form action="../function/sign-up-action.php" method="POST" enctype="multipart/form-data" class="signup-form">
         <h1>Create an Account</h1>
         <label for="first_name">First Name:</label>
         <input type="text" id="first_name" name="first_name" required>
