@@ -4,9 +4,9 @@ namespace configuration;
 use PDO;
 use PDOException;
 
-class DatabaseConnection
+class database_connection
 {
-    private static ?DatabaseConnection $instance = null;
+    private static ?database_connection $instance = null;
     private ?PDO $connection = null;
 
     /**
@@ -31,9 +31,9 @@ class DatabaseConnection
     /**
      * Get the singleton instance of the DatabaseConnection class.
      *
-     * @return DatabaseConnection
+     * @return database_connection
      */
-    public static function getInstance(): DatabaseConnection
+    public static function getInstance(): database_connection
     {
         if (self::$instance === null) {
             self::$instance = new self();

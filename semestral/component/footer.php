@@ -4,5 +4,4 @@
     </div>
 </footer>
 </body>
-<script src="../script/main.js"></script>
 </html>

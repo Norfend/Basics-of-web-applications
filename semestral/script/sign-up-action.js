@@ -1,6 +1,4 @@
-let usernameIsAvailable = false;
-
-function checkUsernameAvailability() {
+function validateAccountData() {
     const signupForm = document.getElementById('signup-form');
     const formData = new FormData(signupForm);
     const xhr = new XMLHttpRequest();
@@ -9,7 +7,8 @@ function checkUsernameAvailability() {
         if (xhr.status === 200) {
             const response = xhr.responseText.trim();
             if (response === 'Success') {
-                usernameIsAvailable = true;
+                alert("Account was successfully created");
+                window.location = '/';
             } else {
                 alert(response);
             }
@@ -18,12 +17,9 @@ function checkUsernameAvailability() {
     xhr.send(formData);
 }
 
-document.getElementById('submit').addEventListener('click', checkUsernameAvailability);
 document.getElementById('signup-form').addEventListener('submit', function (event) {
     event.preventDefault();
-    if (usernameIsAvailable) {
-        window.location = '/';
-    }
+    validateAccountData();
 });
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('signup-form');

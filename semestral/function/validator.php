@@ -2,21 +2,21 @@
 declare(strict_types=1);
 
 namespace function;
-include "../entities/Account.php";
-use configuration\DatabaseConnection;
-use entities\Account;
+include "../entities/account.php";
+use configuration\database_connection;
+use entities\account;
 use PDOException;
 
-class Validator {
+class validator {
 
-    private static ?Validator $instance = null;
+    private static ?validator $instance = null;
 
     private static array $errors = array();
 
     private function __construct()
     {}
 
-    public static function getInstance(): Validator
+    public static function getInstance(): validator
     {
         if (self::$instance === null) {
             self::$instance = new self();
@@ -31,14 +31,13 @@ class Validator {
 
     public function validateAccountPost(string $firstName, string $lastName, string $username,
                                         string $email, string $password, string $confirm_password,
-                                        array $avatar) : ?Account
+                                        array $avatar) : ?account
     {
         if (! $this->validateName($firstName)) self::$errors[] = "First name must be at least 2 characters";
         if (! $this->validateName($lastName)) self::$errors[] = "Last name must be at least 2 characters";
         $this->validateUsername($username);
         if (! $this->validateEmail($email)) self::$errors[] = "Email is invalid";
-        if (! $this->validatePassword($password)) self::$errors[] = "Password must be at least 8 characters long,
-        contain at least one lowercase letter, one uppercase letter, and one number";
+        if (! $this->validatePassword($password)) self::$errors[] = "Password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, and one number";
         if ($password !== $confirm_password) self::$errors[] = "Passwords do not match";
         if (count($avatar) > 6) $this->validateImage($avatar);
         if (count(self::$errors) < 1) {
@@ -52,7 +51,7 @@ class Validator {
             catch (PDOException $e) {
                 $accountAvatar = '../upload/avatar/avatar-placeholder.png';
             }
-            return new Account($firstName, $lastName, $username, $email, $accountPassword, $accountAvatar);
+            return new account($firstName, $lastName, $username, $email, $accountPassword, $accountAvatar);
         }
         else return null;
     }
@@ -68,7 +67,7 @@ class Validator {
     {
         $safeInput = $this->trim_input($data);
         if (preg_match('/^[a-zA-Z0-9]{6,}$/', $safeInput)) {
-            $connection = DatabaseConnection::getInstance()->getConnection();
+            $connection = database_connection::getInstance()->getConnection();
             $stmt = $connection->prepare('SELECT COUNT(*) FROM user WHERE username = ?');
             try {
                 $stmt->execute([$data]);
@@ -78,7 +77,7 @@ class Validator {
             }
             if ($stmt->fetchColumn() > 0) self::$errors[] = 'Username is not available';
         }
-        else self::$errors[] = 'Username is not valid';
+        else self::$errors[] = 'Username must be at least 6 characters long and contain only letters and numbers';
     }
 
     public function validateEmail(string $data): bool

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 namespace entities;
-class Account
+class account
 {
     private string $firstName;
 
