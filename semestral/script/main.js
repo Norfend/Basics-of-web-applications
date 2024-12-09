@@ -1,32 +1,33 @@
-function checkUsernameAvailability() {
-    const username = document.getElementById('username');
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'validate-username.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+let usernameIsAvailable = false;
 
+function checkUsernameAvailability() {
+    const signupForm = document.getElementById('signup-form');
+    const formData = new FormData(signupForm);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '../function/sign-up-action.php', true);
     xhr.onload = function() {
         if (xhr.status === 200) {
             const response = xhr.responseText.trim();
-
-            if (response === 'AVAILABLE') {
-                alert('Username is available!');
-            } else if (response === 'UNAVAILABLE') {
-                alert('Username is already taken. Please choose another one.');
+            if (response === 'Success') {
+                usernameIsAvailable = true;
             } else {
-                alert('Invalid username.');
+                alert(response);
             }
         }
     };
-
-    xhr.send('username=' + encodeURIComponent(username));
+    xhr.send(formData);
 }
 
-// Attach the function to button click event
-document.getElementById('check-username-btn').addEventListener('click', checkUsernameAvailability);
-
-// Prevent form submission until everything is valid
-document.getElementById('signup-form').addEventListener('submit', function(e) {
-    e.preventDefault();  // Prevent form submission
-
-    alert('Form submitted successfully!');  // Replace with your actual form submission logic
+document.getElementById('submit').addEventListener('click', checkUsernameAvailability);
+document.getElementById('signup-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    if (usernameIsAvailable) {
+        window.location = '/';
+    }
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('signup-form');
+    if (form) {
+        form.noValidate = true;
+    }
 });

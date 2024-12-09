@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace function;
 include "../configuration/DatabaseConnection.php";
 use \configuration\DatabaseConnection;
+use PDOException;
 
 require_once '../configuration/DatabaseConnection.php';
 require_once '../function/Validator.php';
@@ -20,16 +21,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if (empty($errors)) {
         $stmt = $connection->prepare("INSERT INTO user (first_name, last_name, username, email, password, avatar) VALUES (?, ?, ?, ?, ?, ?)");
-        if ($stmt->execute([$account->getFirstName(), $account->getLastName(), $account->getUsername(), $account->getEmail(),
-            $account->getPassword(), $account->getAvatar()])) {
-            echo "Account successfully created!";
-        } else {
-            echo "Failed to create account. Please try again.";
+        try {
+            $stmt->execute([$account->getFirstName(), $account->getLastName(), $account->getUsername(),
+                $account->getEmail(), $account->getPassword(), $account->getAvatar()]);
+            echo 'Success';
+        }
+        catch (PDOException $e) {
+            echo $e->getMessage();
         }
     } else {
-        // Display errors
         foreach ($errors as $error) {
-            echo "<p style='color: red;'>$error</p>";
+            echo $error . "\n";
         }
     }
 }

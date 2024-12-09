@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace function;
 include "../entities/Account.php";
+use configuration\DatabaseConnection;
 use entities\Account;
+use PDOException;
 
 class Validator {
 
@@ -31,20 +33,25 @@ class Validator {
                                         string $email, string $password, string $confirm_password,
                                         array $avatar) : ?Account
     {
-        if (! $this->validateName($firstName)) self::$errors[] = "First name is invalid";
-        if (! $this->validateName($lastName)) self::$errors[] = "Last name is invalid";
-        if (! $this->validateUsername($username)) self::$errors[] = "Username is invalid";
+        if (! $this->validateName($firstName)) self::$errors[] = "First name must be at least 2 characters";
+        if (! $this->validateName($lastName)) self::$errors[] = "Last name must be at least 2 characters";
+        $this->validateUsername($username);
         if (! $this->validateEmail($email)) self::$errors[] = "Email is invalid";
-        if (! $this->validatePassword($password)) self::$errors[] = "Password is invalid";
+        if (! $this->validatePassword($password)) self::$errors[] = "Password must be at least 8 characters long,
+        contain at least one lowercase letter, one uppercase letter, and one number";
         if ($password !== $confirm_password) self::$errors[] = "Passwords do not match";
-        $this->validateImage($avatar);
+        if (count($avatar) > 6) $this->validateImage($avatar);
         if (count(self::$errors) < 1) {
             $accountPassword = password_hash($password, PASSWORD_BCRYPT);
             $filename = $username . '-' . pathinfo($avatar['name'], PATHINFO_FILENAME) . '.' . pathinfo($avatar['name'], PATHINFO_EXTENSION);
-            $uploadDir = '../upload/avatar';
-            $destination = $uploadDir . '/' . $filename;
-            move_uploaded_file($avatar['tmp_name'], $destination);
-            $accountAvatar = "$destination";
+            $destination = '../upload/avatar' . '/' . $filename;
+            try {
+                move_uploaded_file($avatar['tmp_name'], $destination);/*Не работает на сервере ЗВА*/
+                $accountAvatar = $destination;
+            }
+            catch (PDOException $e) {
+                $accountAvatar = '../upload/avatar/avatar-placeholder.png';
+            }
             return new Account($firstName, $lastName, $username, $email, $accountPassword, $accountAvatar);
         }
         else return null;
@@ -57,11 +64,21 @@ class Validator {
         return false;
     }
 
-    public function validateUsername(string $data): bool
+    public function validateUsername(string $data): void
     {
         $safeInput = $this->trim_input($data);
-        if (preg_match('/^[a-zA-Z0-9]{6,}$/', $safeInput)) return true;
-        else return false;
+        if (preg_match('/^[a-zA-Z0-9]{6,}$/', $safeInput)) {
+            $connection = DatabaseConnection::getInstance()->getConnection();
+            $stmt = $connection->prepare('SELECT COUNT(*) FROM user WHERE username = ?');
+            try {
+                $stmt->execute([$data]);
+            }
+            catch (PDOException $e) {
+                self::$errors[] = $e->getMessage();
+            }
+            if ($stmt->fetchColumn() > 0) self::$errors[] = 'Username is not available';
+        }
+        else self::$errors[] = 'Username is not valid';
     }
 
     public function validateEmail(string $data): bool
@@ -79,7 +96,7 @@ class Validator {
     public function validateImage(array $file) :bool
     {
         if ($file['error'] !== UPLOAD_ERR_OK) {
-            self::$errors[] = "File upload error: ";
+            self::$errors[] = "File upload error";
             return false;
         }
         if ($file['size'] > 1024 * 1024) {
@@ -101,7 +118,7 @@ class Validator {
         }
         [$width, $height] = $imageInfo;
         if ($width > 400 || $height > 400) {
-            echo "Image dimensions exceed the allowed limit of 400x400 pixels.";
+            echo "Image dimensions exceed the allowed limit of 400x400 pixels";
             return false;
         }
         return true;
