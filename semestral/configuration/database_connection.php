@@ -18,9 +18,9 @@ class database_connection
             $env = parse_ini_file('.env');
             $dsn = "mysql:host={$env["host"]};dbname={$env["dbName"]}";
             $this->connection = new PDO($dsn, $env["username"], $env["password"], [
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Set error mode to exceptions
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,      // Fetch results as associative arrays
-                PDO::ATTR_PERSISTENT         => true                   // Persistent connection
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_PERSISTENT         => true
             ]);
         } catch (PDOException $e) {
             // Log error or handle gracefully in production
