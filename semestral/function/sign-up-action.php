@@ -24,7 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $stmt->execute([$account->getFirstName(), $account->getLastName(), $account->getUsername(),
                 $account->getEmail(), $account->getPassword(), $account->getAvatar()]);
-            setcookie('username', $account->getUsername(), time() + (24 * 60 * 60 * 1000), "/");
+            $cookieData = [
+                'username' => $account['username'],
+                'avatar' => $account['avatar']
+            ];
+            setcookie('username', json_encode($cookieData), time() + (24 * 60 * 60 * 1000), "/");
             echo 'Success';
         }
         catch (PDOException $e) {

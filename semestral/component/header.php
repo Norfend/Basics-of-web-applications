@@ -1,3 +1,15 @@
+<?php
+$cookieData = null;
+$username = null;
+$avatar = null;
+if (isset($_COOKIE['username'])) {
+    $cookieData = json_decode($_COOKIE['username'], true);
+    if (json_last_error() === JSON_ERROR_NONE) {
+        $username = htmlspecialchars($cookieData['user']);
+        $avatar = htmlspecialchars($cookieData['avatar']);
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,14 +25,34 @@
 <header class="header">
     <div class="header-container">
         <div class="logo">
-            <a href="#">MyLogo</a>
+            <div class="logo-left">
+                <?php if ($avatar): ?>
+                    <img src="<?= $avatar ?>" alt="User Avatar" class="user-avatar">
+                <?php else: ?>
+                    <img src="../upload/default-logo.png" alt="Site Logo" class="site-logo">
+                <?php endif; ?>
+            </div>
+            <div class="logo-right">
+                <?php if ($username): ?>
+                    Welcome back, <?= $username ?>!
+                    <div class="user-nav">
+                        <a href="../page/account.php">Account</a>
+                        <a href="../function/logout.php">Logout</a>
+                    </div>
+                <?php else: ?>
+                    Welcome to my cooking site!
+                    <div class="user-nav">
+                        <a href="../page/signup.php">Sign Up</a>
+                        <a href="../page/sign-in.php">Sign In</a>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
         <nav class="nav" aria-label="Main navigation">
             <ul class="nav-links">
                 <li><a href="../index.php">Home</a></li>
-                <li><a href="../index.php">About</a></li>
-                <li><a href="../page/signin.php">Sign in</a></li>
-                <li><a href="../page/signup.php">Sign up</a></li> <!--temporary link!!!!!!!-->
+                <li><a href="../page/recipe.php">Create Recipes</a></li>
+                <li><a href="../page/sign-in.php">Find Recipes</a></li>
             </ul>
         </nav>
     </div>
