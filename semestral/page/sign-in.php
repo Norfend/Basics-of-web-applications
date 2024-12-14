@@ -11,6 +11,6 @@ require_once '../component/header.php';?>
         <button type="submit" name="submit">Sign In</button>
     </form>
 </main>
-    <script src="../script/sign-in-action.js"></script>
+<script type="module" src="../script/sign-in-action.js"></script>
 
 <?php include '../component/footer.php';?>

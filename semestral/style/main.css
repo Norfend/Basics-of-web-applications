@@ -1,6 +1,6 @@
 @import "header.css";
 @import "footer.css";
-@import "signup.css";
+@import "form.css";
 
 body {
     display: flex;
