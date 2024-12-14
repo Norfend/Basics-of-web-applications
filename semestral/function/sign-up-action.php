@@ -2,12 +2,11 @@
 declare(strict_types=1);
 
 namespace function;
-include "../configuration/database_connection.php";
-use \configuration\database_connection;
-use PDOException;
-
 require_once '../configuration/database_connection.php';
 require_once '../function/validator.php';
+require_once '../function/cookie.php';
+use \configuration\database_connection;
+use PDOException;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $validator = validator::getInstance();
@@ -28,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'username' => $account['username'],
                 'avatar' => $account['avatar']
             ];
-            setcookie('username', json_encode($cookieData), time() + (24 * 60 * 60 * 1000), "/");
+            cookie::set('username', $cookieData, 1);
             echo 'Success';
         }
         catch (PDOException $e) {

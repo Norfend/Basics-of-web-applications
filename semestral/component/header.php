@@ -42,7 +42,7 @@ if (isset($_COOKIE['username'])) {
                 <?php else: ?>
                     Welcome to my cooking site!
                     <div class="user-nav">
-                        <a href="../page/signup.php">Sign Up</a>
+                        <a href="../page/sign-up.php">Sign Up</a>
                         <a href="../page/sign-in.php">Sign In</a>
                     </div>
                 <?php endif; ?>
