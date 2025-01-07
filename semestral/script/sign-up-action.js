@@ -20,6 +20,8 @@ function formValidation(form) {
     const errorField = form.getElementById('error');
     let result = true;
 
+    errorField.innerHTML = '';
+
     validate(firstNameField, '^[a-zA-Z0-9_]{6,255}$', errorField,
         '<div class="error">First name must be at least 2 characters</div>');
     validate(lastNameField, '^[a-zA-Z0-9_]{6,255}$', errorField,

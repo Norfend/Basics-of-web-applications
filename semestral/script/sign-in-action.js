@@ -4,7 +4,7 @@ setup();
 
 function loginOperation() {
     const formData = new FormData(document.getElementById('sign-in-form'));
-    if (formValidation(document.getElementById('sign-in-form'))) {
+    if (formValidation(document)) {
         sendRequest(formData, 'POST', '../function/sign-in-action.php',
             'Welcome to the site!')
     }

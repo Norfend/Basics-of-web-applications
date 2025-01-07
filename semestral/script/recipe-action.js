@@ -3,7 +3,7 @@ import {addListenerToDocument, sendRequest, setOnChange, validate} from "/script
 setup();
 
 function recipeValidation() {
-    const formData = new FormData(document.getElementById('signup-form'));
+    const formData = new FormData(document.getElementById('recipe-form'));
     if (formValidation(document)) {
         sendRequest(formData, 'POST', '../function/recipe-action.php',
             "Recipe was successfully created");
@@ -17,6 +17,8 @@ function formValidation(form) {
     const ingredientsField = form.getElementById('ingredients');
     const errorField = form.getElementById('error');
     let result = true;
+
+    errorField.innerHTML = '';
 
     validate(recipeNameField, '^[a-zA-Z0-9]{3,255}$', errorField,
         '<div class="error">Recipe name must be at least 3 characters</div>');

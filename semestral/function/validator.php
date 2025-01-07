@@ -63,10 +63,10 @@ class validator {
                                        string $ingredients, array $image) : ?recipe
     {
         self::$errors = array();
-        if (! preg_match('^[a-zA-Z0-9]{3,255}$', $recipeName)) self::$errors[] = "Recipe name must be at least 3 characters";
-        if (! preg_match('^[a-zA-Z0-9_!.,():;?-]{20,5000}$', $description)) self::$errors[] = "Description must be at least 20 characters";
-        if (! preg_match('^[a-zA-Z0-9_!.,():;?-]{20,255}$', $howto)) self::$errors[] = "How to must be at least 20 characters";
-        if (! preg_match('^[a-zA-Z0-9_!.,():;?-]{20,255}$', $ingredients)) self::$errors[] = "Ingredients must be at least 20 characters";
+        if (! preg_match('/^[a-zA-Z0-9]{3,255}$/', $recipeName)) self::$errors[] = "Recipe name must be at least 3 characters";
+        if (! preg_match('/^[a-zA-Z0-9_!.,():;?-]{20,5000}$/', $description)) self::$errors[] = "Description must be at least 20 characters";
+        if (! preg_match('/^[a-zA-Z0-9_!.,():;?-]{20,255}$/', $howto)) self::$errors[] = "How to must be at least 20 characters";
+        if (! preg_match('/^[a-zA-Z0-9_!.,():;?-]{20,255}$/', $ingredients)) self::$errors[] = "Ingredients must be at least 20 characters";
         if (count($image) > 6) $this->validateImage($image);
         if (count(self::$errors) < 1) {
             $filename = $recipeName . '-' . pathinfo($image['name'], PATHINFO_FILENAME) . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
@@ -93,7 +93,7 @@ class validator {
     public function validateUsername(string $data): void
     {
         $safeInput = $this->trim_input($data);
-        if (preg_match('^[a-zA-Z0-9_]{6,255}$', $safeInput)) {
+        if (preg_match('/^[a-zA-Z0-9_]{6,255}$/', $safeInput)) {
             $connection = database_connection::getInstance()->getConnection();
             $stmt = $connection->prepare('SELECT COUNT(*) FROM user WHERE username = ?');
             try {
@@ -115,7 +115,7 @@ class validator {
 
     public function validatePassword(string $passwordOne): bool
     {
-        if (preg_match('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$', $passwordOne)) return true;
+        if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/', $passwordOne)) return true;
         else return false;
     }
 
