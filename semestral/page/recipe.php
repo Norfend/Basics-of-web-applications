@@ -15,7 +15,9 @@ require_once '../component/header.php';?>
         <label for="image">Recipe Image (optional)</label>
         <input type="file" id="image" name="image" accept="image/*">
         <button type="submit" class="btn-submit">Add Recipe</button>
+        <span id="error"></span>
     </form>
 </main>
+<script type="module" src="../script/recipe-action.js"></script>
 
 <?php include '../component/footer.php';?>

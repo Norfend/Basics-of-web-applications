@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace function;
 include "../entities/account.php";
+include "../entities/recipe.php";
 use configuration\database_connection;
 use entities\account;
+use entities\recipe;
 use PDOException;
 
 class validator {
@@ -33,6 +35,7 @@ class validator {
                                         string $email, string $password, string $confirm_password,
                                         array $avatar) : ?account
     {
+        self::$errors = array();
         if (! $this->validateName($firstName)) self::$errors[] = "First name must be at least 2 characters";
         if (! $this->validateName($lastName)) self::$errors[] = "Last name must be at least 2 characters";
         $this->validateUsername($username);
@@ -52,6 +55,30 @@ class validator {
                 $accountAvatar = '../upload/avatar/avatar-placeholder.png';
             }
             return new account($firstName, $lastName, $username, $email, $accountPassword, $accountAvatar);
+        }
+        else return null;
+    }
+
+    public function validateRecipePost(string $recipeName, string $description, string $howto,
+                                       string $ingredients, array $image) : ?recipe
+    {
+        self::$errors = array();
+        if (! preg_match('^[a-zA-Z0-9]{3,255}$', $recipeName)) self::$errors[] = "Recipe name must be at least 3 characters";
+        if (! preg_match('^[a-zA-Z0-9_!.,():;?-]{20,5000}$', $description)) self::$errors[] = "Description must be at least 20 characters";
+        if (! preg_match('^[a-zA-Z0-9_!.,():;?-]{20,255}$', $howto)) self::$errors[] = "How to must be at least 20 characters";
+        if (! preg_match('^[a-zA-Z0-9_!.,():;?-]{20,255}$', $ingredients)) self::$errors[] = "Ingredients must be at least 20 characters";
+        if (count($image) > 6) $this->validateImage($image);
+        if (count(self::$errors) < 1) {
+            $filename = $recipeName . '-' . pathinfo($image['name'], PATHINFO_FILENAME) . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
+            $destination = '../upload/recipe' . '/' . $filename;
+            try {
+                move_uploaded_file($image['tmp_name'], $destination);/*Не работает на сервере ЗВА*/
+                $recipeImage = $destination;
+            }
+            catch (PDOException $e) {
+                $recipeImage = '../upload/recipe/recipe-placeholder.png';
+            }
+            return new recipe($recipeName, $description, $howto, $ingredients, $recipeImage);
         }
         else return null;
     }
