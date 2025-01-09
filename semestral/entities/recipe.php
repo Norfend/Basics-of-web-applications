@@ -10,7 +10,7 @@ class recipe
     private string $ingredients;
     private string $image;
 
-    function __construct(string $image, string $ingredients, string $howto, string $description, string $recipeName)
+    function __construct(string $recipeName, string $description, string $howto, string $ingredients, string $image)
     {
         $this->image = $image;
         $this->ingredients = $ingredients;

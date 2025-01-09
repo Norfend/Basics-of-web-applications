@@ -1,11 +1,16 @@
 <?php
-require_once 'component/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/repository/recipeRepository.php';
+use \repository\recipeRepository;
 
-$recipesJson = include 'configuration/recipes.php';
-$recipes = json_decode($recipesJson, true);
-if (json_last_error() !== JSON_ERROR_NONE) {
-    die("Failed to decode recipes JSON: " . json_last_error_msg());
-}
+$pageNumber = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0 ? (int)$_GET['page'] : 1;
+$pageSize = 3;
+$offset = ($pageNumber - 1) * $pageSize;
+
+$recipes = recipeRepository::getRecipePage($pageSize, $offset);
+
+$totalRecipes = count(recipeRepository::getAllRecipes());
+$totalPages = (int)ceil($totalRecipes / $pageSize);
 ?>
 
 <main class="main-content">
@@ -13,10 +18,10 @@ if (json_last_error() !== JSON_ERROR_NONE) {
         <?php foreach ($recipes as $recipe): ?>
             <div class="recipe-card">
                 <div class="recipe-image">
-                    <img src="<?= htmlspecialchars($recipe['image']) ?>" alt="<?= htmlspecialchars($recipe['name']) ?>">
+                    <img src="<?= htmlspecialchars($recipe['image']) ?>" alt="<?= htmlspecialchars($recipe['recipe_name']) ?>">
                 </div>
                 <div class="recipe-details">
-                    <h2><?= htmlspecialchars($recipe['name']) ?></h2>
+                    <h2><?= htmlspecialchars($recipe['recipe_name']) ?></h2>
                     <p><?= htmlspecialchars($recipe['description']) ?></p>
                 </div>
             </div>
@@ -25,5 +30,28 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 </main>
 
 <?php
-require_once 'component/footer.php';
+echo '<div class="pagination">';
+
+if ($pageNumber > 1) {
+    echo '<a href="?page=' . ($pageNumber - 1) . '">&laquo;</a>';
+} else {
+    echo '<span class="disabled">&laquo;</span>';
+}
+
+for ($i = 1; $i <= $totalPages; $i++) {
+    if ($i == $pageNumber) {
+        echo '<span class="active">' . $i . '</span>';
+    } else {
+        echo '<a href="?page=' . $i . '">' . $i . '</a>';
+    }
+}
+
+if ($pageNumber < $totalPages) {
+    echo '<a href="?page=' . ($pageNumber + 1) . '">&raquo;</a>';
+} else {
+    echo '<span class="disabled">&raquo;</span>';
+}
+
+echo '</div>';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/component/footer.php';
 ?>

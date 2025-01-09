@@ -19,14 +19,13 @@ function formValidation(form) {
     let result = true;
 
     errorField.innerHTML = '';
-
-    validate(recipeNameField, '^[a-zA-Z0-9]{3,255}$', errorField,
+    validate(recipeNameField, '^[a-zA-Z0-9\\s]{3,255}$', errorField,
         '<div class="error">Recipe name must be at least 3 characters</div>');
-    validate(descriptionField, '^[a-zA-Z0-9_!.,():;?-]{20,5000}$', errorField,
+    validate(descriptionField, '^[a-zA-Z0-9\\s_!.,():;?-]{20,5000}$', errorField,
         '<div class="error">Description must be at least 20 characters</div>');
-    validate(howtoField, '^[a-zA-Z0-9_!.,():;?-]{20,255}$', errorField,
+    validate(howtoField, '^[a-zA-Z0-9\\s_!.,():;?-]{20,255}$', errorField,
         '<div class="error">How to must be at least 20 characters</div>');
-    validate(ingredientsField, '^[a-zA-Z0-9_!.,():;?-]{20,255}$', errorField,
+    validate(ingredientsField, '^[a-zA-Z0-9\\s_!.,():;?-]{20,255}$', errorField,
         '<div class="error">Ingredients must be at least 20 characters</div>');
 
     if (errorField.innerHTML.length > 0) {

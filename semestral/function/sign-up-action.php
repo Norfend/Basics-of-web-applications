@@ -2,9 +2,9 @@
 declare(strict_types=1);
 
 namespace function;
-require_once '../configuration/database_connection.php';
-require_once '../function/validator.php';
-require_once '../function/cookie.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/configuration/database_connection.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/function/validator.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/function/cookie.php';
 use \configuration\database_connection;
 use PDOException;
 

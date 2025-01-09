@@ -42,6 +42,20 @@
     outline: 2px solid rgba(255, 0, 0, 0.3);
 }
 
+.signup-form textarea {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 0;
+    width: 100%;
+}
+
+.signup-form textarea.invalid {
+    border: 1px solid rgba(255, 0, 0, 0.5);
+    border-radius: 5px;
+    outline: 2px solid rgba(255, 0, 0, 0.3);
+}
+
 .signup-form button {
     background-color: #333;
     border: none;
@@ -56,6 +70,48 @@
 
 .signup-form button:hover {
     background-color: #f39c12;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.pagination a,
+.pagination span {
+    display: inline-block;
+    padding: 8px 12px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+.pagination .active {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+    cursor: default;
+}
+
+.pagination .disabled {
+    color: #aaa;
+    background-color: #f9f9f9;
+    border-color: #ccc;
+    cursor: not-allowed;
 }
 
 #error div {

@@ -1,5 +1,5 @@
 <?php
-require_once '../component/header.php';?>
+require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';?>
 
 <main class="main-content">
     <form id="signup-form" action="" method="POST" enctype="multipart/form-data" class="signup-form">
@@ -24,4 +24,4 @@ require_once '../component/header.php';?>
 </main>
 <script type="module" src="../script/sign-up-action.js"></script>
 
-<?php include '../component/footer.php';?>
+<?php include $_SERVER['DOCUMENT_ROOT'] . '/component/footer.php';?>

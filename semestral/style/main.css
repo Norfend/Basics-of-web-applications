@@ -41,10 +41,10 @@ body {
 
 .recipe-details {
     width: 70%;
-    padding: 15px;
+    padding: 5px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 }
 
 .recipe-details h2 {
@@ -65,4 +65,7 @@ html {
     height: 100%;
     margin: 0;
     padding: 0;
+}
+textarea {
+    resize: none;
 }
