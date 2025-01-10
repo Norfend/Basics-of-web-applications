@@ -51,7 +51,11 @@ if (isset($_COOKIE['username'])) {
         <nav class="nav" aria-label="Main navigation">
             <ul class="nav-links">
                 <li><a href="../index.php">Home</a></li>
-                <li><a href="../page/recipe.php">Create Recipes</a></li>
+                <?php if ($username): ?>
+                    <li><a href="../page/recipe.php">Create Recipes</a></li>
+                <?php else: ?>
+                    <li><a href="#" onclick="alert('Login or register first!');">Create Recipes</a></li>
+                <?php endif; ?>
                 <li><a href="../page/sign-in.php">Find Recipes</a></li>
             </ul>
         </nav>

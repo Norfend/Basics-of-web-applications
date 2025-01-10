@@ -16,7 +16,7 @@ class account
 
     private string $avatar;
 
-    function __construct(string $firstName, string $lastName, string $username, string $email, string $password, string $avatar)
+    function __construct(string $firstName, string $lastName, string $username, string $email, ?string $password, string $avatar)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;

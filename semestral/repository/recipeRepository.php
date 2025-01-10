@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace repository;
+use entities\recipe;
 use PDO;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/configuration/database_connection.php';
 use \configuration\database_connection;
@@ -35,6 +36,15 @@ class recipeRepository
         $stmt = self::$databaseConnection->prepare('SELECT * FROM recipe');
 
         $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public static function getRecipesByAuthor(int $author): array
+    {
+        self::initConnection();
+        $stmt = self::$databaseConnection->prepare('SELECT * FROM recipe WHERE author = ?');
+
+        $stmt->execute([$author]);
         return $stmt->fetchAll();
     }
 }

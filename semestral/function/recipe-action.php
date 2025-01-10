@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $connection->prepare("INSERT INTO recipe (recipe_name, description, howto, ingredients, image, author) VALUES (?, ?, ?, ?, ?, ?)");
         try {
             $cookieData = json_decode($_COOKIE['username'], true);
-            $username = accountRepository::getAccountByUsername($cookieData['user']);
+            $username = accountRepository::getUserIdByUsername($cookieData['user']);
             if ($username === -1) {
                 throw new RuntimeException("Your username is not valid! Log in again");
             }

@@ -1,0 +1,154 @@
+.recipe-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.recipe-card {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.recipe-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-image {
+    width: 30%;
+    overflow: hidden;
+}
+
+.recipe-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.recipe-details {
+    width: 70%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.recipe-details h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    flex: 0 0 20%;
+    color: #333;
+    transition: color 0.2s ease-in-out;
+}
+
+.recipe-details p {
+    font-size: 1em;
+    line-height: 1.5;
+    flex: 1 1 80%;
+    color: #555;
+    transition: color 0.2s ease-in-out;
+}
+
+.recipe-card:hover .recipe-details h2 {
+    color: #f39c12;
+}
+
+.recipe-card:hover .recipe-details p {
+    color: #333;
+}
+
+.account-recipes {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.account-recipes h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.account-recipe-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.account-recipe-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.account-recipe-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.account-recipe-link {
+    text-decoration: none;
+    color: inherit;
+    flex: 1;
+    margin-right: 20px;
+}
+
+.account-recipe-link h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0;
+    transition: color 0.2s ease-in-out;
+}
+
+.account-recipe-link:hover h3 {
+    color: #f39c12;
+}
+
+.account-recipe-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.account-edit-button,
+.account-delete-button {
+    font-size: 0.9em;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.account-edit-button {
+    background-color: #f39c12;
+    color: #fff;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.account-edit-button:hover {
+    background-color: #d17d0b;
+}
+
+.account-delete-button {
+    background-color: #e74c3c;
+    color: #fff;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.account-delete-button:hover {
+    background-color: #c0392b;
+}
