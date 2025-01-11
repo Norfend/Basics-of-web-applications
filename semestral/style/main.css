@@ -31,3 +31,81 @@ html {
 textarea {
     resize: none;
 }
+
+@media (max-width: 600px) {
+    .header-container, .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .account-top, .account-recipes {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .account-image img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .account-info {
+        text-align: center;
+    }
+
+    .recipe-image img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+    .nav-links {
+        gap: 15px;
+    }
+
+    .account-top {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .account-image img {
+        width: 300px;
+        height: 300px;
+    }
+
+    .recipe-image img {
+        max-width: 80%;
+        height: auto;
+    }
+}
+
+@media (min-width: 961px) {
+    .header-container, .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .nav-links {
+        gap: 30px;
+    }
+
+    .account-top {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .account-image img {
+        width: 400px;
+        height: 400px;
+    }
+
+    .recipe-image img {
+        width: 400px;
+        height: 400px;
+    }
+}

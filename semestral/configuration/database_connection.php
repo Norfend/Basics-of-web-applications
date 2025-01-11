@@ -4,19 +4,23 @@ namespace configuration;
 use PDO;
 use PDOException;
 
+/**
+ * Singleton class to manage database connection using PDO.
+ */
 class database_connection
 {
+
     private static ?database_connection $instance = null;
+
     private ?PDO $connection = null;
 
-    /**
-     * Private constructor to prevent direct object creation.
-     */
     private function __construct()
     {
         try {
             $env = parse_ini_file('.env');
+
             $dsn = "mysql:host={$env["host"]};dbname={$env["dbName"]}";
+
             $this->connection = new PDO($dsn, $env["username"], $env["password"], [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -28,9 +32,10 @@ class database_connection
     }
 
     /**
-     * Get the singleton instance of the DatabaseConnection class.
+     * Returns the singleton instance of the database connection class.
+     * If the instance does not exist, it creates and returns a new one.
      *
-     * @return database_connection
+     * @return database_connection The singleton instance of the class.
      */
     public static function getInstance(): database_connection
     {
@@ -40,26 +45,15 @@ class database_connection
         return self::$instance;
     }
 
-    /**
-     * Get the PDO connection instance.
-     *
-     * @return PDO
-     */
     public function getConnection(): PDO
     {
         return $this->connection;
     }
 
-    /**
-     * Prevent cloning of the singleton instance.
-     */
     private function __clone()
     {
     }
 
-    /**
-     * Prevent serialization of the singleton instance.
-     */
     public function __wakeup()
     {
     }

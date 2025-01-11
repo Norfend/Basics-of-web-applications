@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace function;
+
 require_once __DIR__ . "/../entities/account.php";
 require_once __DIR__ . "/../entities/recipe.php";
 use configuration\database_connection;
@@ -9,6 +10,15 @@ use entities\account;
 use entities\recipe;
 use PDOException;
 
+/**
+ * Validator class for validating and processing user registration and recipe submission data.
+ *
+ * This class provides methods to validate user account data (such as username, password, email, etc.) and
+ * recipe submission data (such as recipe name, ingredients, etc.). It performs input sanitization, checks
+ * for required conditions, and handles image file validation.
+ *
+ * @package function
+ */
 class validator {
 
     private static ?validator $instance = null;
@@ -18,6 +28,11 @@ class validator {
     private function __construct()
     {}
 
+    /**
+     * Returns the singleton instance of the validator class.
+     *
+     * @return validator The singleton instance of the validator class.
+     */
     public static function getInstance(): validator
     {
         if (self::$instance === null) {
@@ -26,11 +41,32 @@ class validator {
         return self::$instance;
     }
 
+    /**
+     * Retrieves the validation errors.
+     *
+     * @return array The list of validation errors.
+     */
     public function getErrors(): array
     {
         return self::$errors;
     }
 
+    /**
+     * Validates and processes user account registration data.
+     *
+     * Validates the first name, last name, username, email, password, avatar, and handles password hashing
+     * and file upload for the avatar. If successful, it returns a new account object.
+     *
+     * @param string $firstName User's first name.
+     * @param string $lastName User's last name.
+     * @param string $username User's username.
+     * @param string $email User's email address.
+     * @param string $password User's password.
+     * @param string $confirm_password User's confirmed password.
+     * @param array $avatar Avatar file array from the form.
+     *
+     * @return account|null Returns an account object if validation passes, or null if validation fails.
+     */
     public function validateAccountPost(string $firstName, string $lastName, string $username,
                                         string $email, string $password, string $confirm_password,
                                         array $avatar) : ?account
@@ -53,7 +89,7 @@ class validator {
             }
             $destination = realpath(__DIR__ . '/../upload/avatar');
             try {
-                move_uploaded_file($avatar['tmp_name'], $destination . '/' . $filename);/*Не работает на сервере ЗВА*/
+                move_uploaded_file($avatar['tmp_name'], $destination . '/' . $filename);
                 $accountAvatar = 'upload/avatar/' . $filename;
             }
             catch (PDOException $e) {}
@@ -62,6 +98,20 @@ class validator {
         else return null;
     }
 
+    /**
+     * Validates and processes recipe submission data.
+     *
+     * Validates the recipe name, description, how-to instructions, ingredients, and image. If successful,
+     * it returns a new recipe object.
+     *
+     * @param string $recipeName Recipe name.
+     * @param string $description Recipe description.
+     * @param string $howto Recipe preparation instructions.
+     * @param string $ingredients Recipe ingredients.
+     * @param array $image Image file array from the form.
+     *
+     * @return recipe|null Returns a recipe object if validation passes, or null if validation fails.
+     */
     public function validateRecipePost(string $recipeName, string $description, string $howto,
                                        string $ingredients, array $image) : ?recipe
     {
@@ -89,6 +139,13 @@ class validator {
         else return null;
     }
 
+    /**
+     * Validates that a name is at least 1 character long.
+     *
+     * @param string $data The name to be validated.
+     *
+     * @return bool Returns true if the name is valid, otherwise false.
+     */
     public function validateName(string $data): bool
     {
         $safeInput = $this->trim_input($data);
@@ -96,6 +153,11 @@ class validator {
         return false;
     }
 
+    /**
+     * Validates that a username is at least 6 characters long and contains only alphanumeric characters or underscores.
+     *
+     * @param string $data The username to be validated.
+     */
     public function validateUsername(string $data): void
     {
         $safeInput = $this->trim_input($data);
@@ -113,18 +175,39 @@ class validator {
         else self::$errors[] = 'Username must be at least 6 characters long and contain only letters and numbers';
     }
 
+    /**
+     * Validates an email address using PHP's filter_var function.
+     *
+     * @param string $data The email address to be validated.
+     *
+     * @return bool Returns true if the email is valid, otherwise false.
+     */
     public function validateEmail(string $data): bool
     {
         if (filter_var($data, FILTER_VALIDATE_EMAIL)) return true;
         else return false;
     }
 
+    /**
+     * Validates that a password meets the minimum requirements of being at least 8 characters long,
+     * containing at least one lowercase letter, one uppercase letter, and one digit.
+     *
+     * @param string $passwordOne
+     * @return bool Returns true if the password is valid, otherwise false.
+     */
     public function validatePassword(string $passwordOne): bool
     {
         if (preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/', $passwordOne)) return true;
         else return false;
     }
 
+    /**
+     * Validates the uploaded image for file errors, size, MIME type, and dimensions.
+     *
+     * @param array $file The image file to be validated.
+     *
+     * @return bool Returns true if the image is valid, otherwise false.
+     */
     public function validateImage(array $file) :bool
     {
         if ($file['error'] !== UPLOAD_ERR_OK) {
@@ -150,7 +233,7 @@ class validator {
         }
         [$width, $height] = $imageInfo;
         if ($width > 400 || $height > 400) {
-            echo "Image dimensions exceed the allowed limit of 400x400 pixels";
+            self::$errors[] = "Image dimensions exceed the allowed limit of 400x400 pixels";
             return false;
         }
         return true;

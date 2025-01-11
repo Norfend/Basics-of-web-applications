@@ -2,11 +2,23 @@
 declare(strict_types=1);
 
 namespace function;
+
 require_once __DIR__ . '/../configuration/database_connection.php';
 require_once __DIR__ . '/validator.php';
 require_once __DIR__ . '/cookie.php';
+
 use \configuration\database_connection;
 use PDOException;
+
+/**
+ * Handles POST HTTP requests for user login authentication.
+ *
+ * This script processes user login requests by validating the provided username and password.
+ * If the credentials are correct, it sets a cookie with the user's username and avatar.
+ * In case of invalid credentials or errors, appropriate messages are displayed.
+ *
+ * @package function
+ */
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $connection = database_connection::getInstance()->getConnection();
@@ -27,12 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ];
                 cookie::set('username', $cookieData, 1);
                 echo 'Success';
+            } else {
+                echo 'Login or/and password are incorrect';
             }
-            else echo 'Login or/and password are incorrect';
+        } else {
+            echo 'Login or/and password are incorrect';
         }
-        else echo 'Login or/and password are incorrect';
-    }
-    catch (PDOException $e) {
+    } catch (PDOException $e) {
         echo $e->getMessage();
     }
 }

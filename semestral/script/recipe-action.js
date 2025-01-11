@@ -1,7 +1,23 @@
 import {addListenerToDocument, sendRequest, setOnChange, validate} from "./functions";
+/**
+ * Script for setting up form validation and AJAX request submission for recipe creation.
+ *
+ * This script validates the recipe creation form, sends the form data via an AJAX request to the server,
+ * and ensures proper user input for recipe fields.
+ *
+ * @module recipeForm
+ */
 
 setup();
 
+/**
+ * Validates the recipe form and sends an AJAX request to the server if validation passes.
+ *
+ * This function collects form data, validates the fields using `formValidation()`, and sends the data
+ * to the server via the `sendRequest()` function if the validation is successful.
+ *
+ * @returns {void}
+ */
 function recipeValidation() {
     const formData = new FormData(document.getElementById('recipe-form'));
     if (formValidation(document)) {
@@ -10,6 +26,16 @@ function recipeValidation() {
     }
 }
 
+/**
+ * Validates the individual fields in the recipe form.
+ *
+ * This function validates the `recipe-name`, `description`, `howto`, and `ingredients` fields
+ * using the `validate()` function. If any field is invalid, an error message is added to the error
+ * section of the form.
+ *
+ * @param {Document} form - The form element to validate.
+ * @returns {boolean} - Returns `true` if the form is valid, otherwise `false`.
+ */
 function formValidation(form) {
     const recipeNameField = form.getElementById('recipe-name');
     const descriptionField = form.getElementById('description');
@@ -19,6 +45,7 @@ function formValidation(form) {
     let result = true;
 
     errorField.innerHTML = '';
+
     validate(recipeNameField, '^[a-zA-Z0-9\\s]{3,255}$', errorField,
         '<div class="error">Recipe name must be at least 3 characters</div>');
     validate(descriptionField, '^[a-zA-Z0-9\\s_!.,():;?-]{20,5000}$', errorField,
@@ -34,6 +61,14 @@ function formValidation(form) {
     return result;
 }
 
+/**
+ * Initializes the form functionality by adding event listeners for validation and input changes.
+ *
+ * This function adds an event listener for form submission, triggers the validation on submit,
+ * and sets up onChange listeners to remove the 'invalid' class on field change.
+ *
+ * @returns {void}
+ */
 function setup() {
     addListenerToDocument(document, 'recipe-form', recipeValidation);
     setOnChange(document.getElementById('recipe-name'));

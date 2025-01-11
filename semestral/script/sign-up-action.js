@@ -1,7 +1,24 @@
 import {addListenerToDocument, sendRequest, setOnChange, validate} from "./functions";
+/**
+ * Script for handling the signup form validation and submission.
+ *
+ * This script validates the signup form fields (first name, last name, username, email, password, confirm password),
+ * and sends the form data to the server for account creation or update based on the cookie status.
+ *
+ * @module signupForm
+ */
 
 setup();
 
+/**
+ * Handles the signup form submission by validating the form and sending the data to the server.
+ *
+ * This function collects form data, validates the input fields using `formValidation()`, and sends the data to the server.
+ * If the user is not logged in (indicated by an empty cookie), it creates a new account. If the user is logged in,
+ * it updates their account information.
+ *
+ * @returns {void}
+ */
 function signupOperation() {
     const formData = new FormData(document.getElementById('signup-form'));
     if (formValidation(document)) {
@@ -22,11 +39,20 @@ function signupOperation() {
             });
             jsonObject['username'] = document.getElementById('username').value;
             sendRequest(JSON.stringify(jsonObject), 'PUT', 'function/sign-up-action.php',
-                 "Account was successfully updated")
+                "Account was successfully updated");
         }
     }
 }
 
+/**
+ * Validates the signup form fields (first name, last name, username, email, password, and confirm password).
+ *
+ * This function checks if the fields meet the specified criteria using regular expressions and password matching.
+ * If there are validation errors, error messages are added to the `errorField`.
+ *
+ * @param {Document} form - The form element to validate.
+ * @returns {boolean} - Returns `true` if the form is valid, otherwise `false`.
+ */
 function formValidation(form) {
     const firstNameField = form.getElementById('first_name');
     const lastNameField = form.getElementById('last_name');
@@ -46,6 +72,7 @@ function formValidation(form) {
     validate(usernameField, '^[a-zA-Z0-9_]{6,255}$', errorField,
         '<div class="error">Username must be at least 6 characters long and contain only letters and numbers</div>');
     validate(emailField, '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$', errorField, '<div class="error">Email is invalid</div>');
+
     if (document.cookie['username'] === null) {
         if (passwordField.value !== confirmPasswordField.value || confirmPasswordField.value === '') {
             confirmPasswordField.classList.add('invalid');
@@ -69,6 +96,14 @@ function formValidation(form) {
     return result;
 }
 
+/**
+ * Initializes the signup form functionality by adding event listeners for validation and input changes.
+ *
+ * This function adds an event listener for form submission, triggers the validation on submit,
+ * and sets up onChange listeners to remove the 'invalid' class on field change.
+ *
+ * @returns {void}
+ */
 function setup() {
     addListenerToDocument(document, 'signup-form', signupOperation);
     setOnChange(document.getElementById('first_name'));
