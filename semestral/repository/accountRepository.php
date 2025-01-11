@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 namespace repository;
-require_once $_SERVER['DOCUMENT_ROOT'] . '/entities/builder/accountBuilder.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/configuration/database_connection.php';
+require_once __DIR__ . '/../entities/builder/accountBuilder.php';
+require_once __DIR__ . '/../configuration/database_connection.php';
 use entities\accountDTO;
 use entities\builder\accountBuilder;
 use PDO;

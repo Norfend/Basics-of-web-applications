@@ -1,6 +1,6 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/repository/recipeRepository.php';
+require_once __DIR__ . '/component/header.php';
+require_once __DIR__ . '/repository/recipeRepository.php';
 use \repository\recipeRepository;
 
 $pageNumber = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0 ? (int)$_GET['page'] : 1;
@@ -55,5 +55,5 @@ if ($pageNumber < $totalPages) {
 }
 
 echo '</div>';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/component/footer.php';
+require_once __DIR__ . '/component/footer.php';
 ?>

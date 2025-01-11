@@ -1,11 +1,11 @@
-import {addListenerToDocument, sendRequest, setOnChange, validate} from "/script/functions.js";
+import {addListenerToDocument, sendRequest, setOnChange, validate} from "./functions";
 
 setup();
 
 function loginOperation() {
     const formData = new FormData(document.getElementById('sign-in-form'));
     if (formValidation(document)) {
-        sendRequest(formData, 'POST', '../function/sign-in-action.php',
+        sendRequest(formData, 'POST', 'function/sign-in-action.php',
             'Welcome to the site!')
     }
 }

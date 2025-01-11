@@ -2,10 +2,10 @@
 declare(strict_types=1);
 
 namespace function;
-require_once $_SERVER['DOCUMENT_ROOT'] . '/configuration/database_connection.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/function/validator.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/function/cookie.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/repository/accountRepository.php';
+require_once __DIR__ . '/../configuration/database_connection.php';
+require_once __DIR__ . '/validator.php';
+require_once __DIR__ . '/cookie.php';
+require_once __DIR__ . '/../repository/accountRepository.php';
 use \configuration\database_connection;
 use \repository\accountRepository;
 use PDOException;

@@ -2,8 +2,8 @@
 
 use repository\accountRepository;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/repository/accountRepository.php';
+require_once __DIR__ . '/../component/header.php';
+require_once __DIR__ . '/../repository/accountRepository.php';
 
 $cookieData = null;
 $username = null;
@@ -58,5 +58,5 @@ if (isset($_COOKIE['username'])) {
     </form>
 </main>
 
-<script type="module" src="../script/sign-up-action.js"></script>
-<?php include $_SERVER['DOCUMENT_ROOT'] . '/component/footer.php'; ?>
+<script type="module" src="script/sign-up-action.js"></script>
+<?php require_once __DIR__ . '/../component/footer.php'; ?>

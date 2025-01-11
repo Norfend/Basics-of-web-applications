@@ -1,6 +1,6 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/repository/accountRepository.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/repository/recipeRepository.php';
+require_once __DIR__ . '/../repository/accountRepository.php';
+require_once __DIR__ . '/../repository/recipeRepository.php';
 use \repository\accountRepository;
 use \repository\recipeRepository;
 
@@ -15,7 +15,7 @@ if (isset($_COOKIE['username'])) {
 
 $user = accountRepository::getAccountByUsername($username);
 $recipes = recipeRepository::getRecipesByAuthor(accountRepository::getUserIdByUsername($username));
-require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';?>
+require_once __DIR__ . '/../component/header.php';?>
 
 <main class="main-content">
     <section class="account-top">
@@ -27,7 +27,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';?>
             <p>First Name: <?= htmlspecialchars($user->getFirstName()) ?></p>
             <p>Last Name: <?= htmlspecialchars($user->getLastName()) ?></p>
             <p>E-mail: <?= htmlspecialchars($user->getEmail()) ?></p>
-            <a href="/page/sign-up.php" class="account-edit-button">Edit Account</a>
+            <a href="page/sign-up.php" class="account-edit-button">Edit Account</a>
         </div>
     </section>
     <section class="account-recipes">
@@ -36,12 +36,12 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';?>
             <ul class="account-recipe-list">
                 <?php foreach ($recipes as $recipe): ?>
                     <li class="account-recipe-item">
-                        <a href="/page/recipe-view.php?id=<?= $recipe['recipe_id'] ?>" class="account-recipe-link">
+                        <a href="page/recipe-view.php?id=<?= $recipe['recipe_id'] ?>" class="account-recipe-link">
                             <h3><?= htmlspecialchars($recipe['recipe_name']) ?></h3>
                         </a>
                         <div class="account-recipe-actions">
-                            <a href="/page/recipe-view.php?id=<?= $recipe['recipe_id'] ?>" class="account-edit-button">Edit</a>
-                            <form action="/function/delete-recipe.php" method="POST" class="account-delete-form">
+                            <a href="page/recipe-view.php?id=<?= $recipe['recipe_id'] ?>" class="account-edit-button">Edit</a>
+                            <form action="function/delete-recipe.php" method="POST" class="account-delete-form">
                                 <input type="hidden" name="recipe_id" value="<?= $recipe['recipe_id'] ?>">
                                 <button type="submit" class="account-delete-button">Delete</button>
                             </form>
@@ -50,9 +50,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';?>
                 <?php endforeach; ?>
             </ul>
         <?php else: ?>
-            <p>You haven't created any recipes yet. <a href="/page/recipe.php">Create one now!</a></p>
+            <p>You haven't created any recipes yet. <a href="page/recipe.php">Create one now!</a></p>
         <?php endif; ?>
     </section>
 </main>
 
-<?php include $_SERVER['DOCUMENT_ROOT'] . '/component/footer.php';?>
+<?php require_once __DIR__ . '/../component/footer.php';?>

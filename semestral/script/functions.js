@@ -6,7 +6,7 @@ export function sendRequest(dataForSending, requestType, requestAddress, inputMe
             const response = xhr.responseText.trim();
             if (response === 'Success') {
                 alert(inputMessage);
-                window.location = '/';
+                window.location = 'index.php';
             } else {
                 alert(response);
             }

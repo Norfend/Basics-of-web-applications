@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace repository;
 use entities\recipe;
 use PDO;
-require_once $_SERVER['DOCUMENT_ROOT'] . '/configuration/database_connection.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/entities/recipe.php';
+require_once __DIR__ . '/../configuration/database_connection.php';
+require_once __DIR__ . '/../entities/recipe.php';
 use \configuration\database_connection;
 
 class recipeRepository

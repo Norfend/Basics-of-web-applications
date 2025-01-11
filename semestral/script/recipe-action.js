@@ -1,11 +1,11 @@
-import {addListenerToDocument, sendRequest, setOnChange, validate} from "/script/functions.js";
+import {addListenerToDocument, sendRequest, setOnChange, validate} from "./functions";
 
 setup();
 
 function recipeValidation() {
     const formData = new FormData(document.getElementById('recipe-form'));
     if (formValidation(document)) {
-        sendRequest(formData, 'POST', '../function/recipe-action.php',
+        sendRequest(formData, 'POST', 'function/recipe-action.php',
             "Recipe was successfully created");
     }
 }

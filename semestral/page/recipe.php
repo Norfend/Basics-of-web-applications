@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';?>
+require_once __DIR__ . '/../component/header.php';?>
 
 <main class="main-content">
     <form id="recipe-form" action="" method="POST" enctype="multipart/form-data" class="signup-form">
@@ -18,6 +18,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';?>
         <span id="error"></span>
     </form>
 </main>
-<script type="module" src="../script/recipe-action.js"></script>
+<script type="module" src="script/recipe-action.js"></script>
 
-<?php include $_SERVER['DOCUMENT_ROOT'] . '/component/footer.php';?>
+<?php require_once __DIR__ . '/../component/footer.php';?>

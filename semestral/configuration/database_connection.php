@@ -23,7 +23,6 @@ class database_connection
                 PDO::ATTR_PERSISTENT         => true
             ]);
         } catch (PDOException $e) {
-            // Log error or handle gracefully in production
             die('Database connection failed: ' . $e->getMessage());
         }
     }

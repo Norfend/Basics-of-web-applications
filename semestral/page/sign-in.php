@@ -1,8 +1,8 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';?>
+require_once __DIR__ . '/../component/header.php';?>
 
 <main class="main-content">
-    <form id="sign-in-form" action="../function/sign-in-action.php" method="POST" enctype="multipart/form-data" class="signup-form">
+    <form id="sign-in-form" action="" method="POST" enctype="multipart/form-data" class="signup-form">
         <h1>Login into your account</h1>
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" autocomplete="on">
@@ -12,6 +12,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';?>
         <span id="error"></span>
     </form>
 </main>
-<script type="module" src="../script/sign-in-action.js"></script>
+<script type="module" src="script/sign-in-action.js"></script>
 
-<?php include $_SERVER['DOCUMENT_ROOT'] . '/component/footer.php';?>
+<?php include __DIR__ . '/../component/footer.php';?>

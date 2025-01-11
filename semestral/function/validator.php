@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 namespace function;
-require_once $_SERVER['DOCUMENT_ROOT'] . "/entities/account.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/entities/recipe.php";
+require_once __DIR__ . "/../entities/account.php";
+require_once __DIR__ . "/../entities/recipe.php";
 use configuration\database_connection;
 use entities\account;
 use entities\recipe;
@@ -42,19 +42,19 @@ class validator {
         if (! $this->validateEmail($email)) self::$errors[] = "Email is invalid";
         if (! $this->validatePassword($password)) self::$errors[] = "Password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, and one number";
         if ($password !== $confirm_password) self::$errors[] = "Passwords don't match";
-        if (count($avatar) > 5) $this->validateImage($avatar);
+        if (count($avatar) > 7) $this->validateImage($avatar);
         if (count(self::$errors) < 1) {
             $accountPassword = password_hash($password, PASSWORD_BCRYPT);
-            if (count($avatar) > 5) {
+            if (count($avatar) > 7) {
                 $filename = $username . '-' . pathinfo($avatar['name'], PATHINFO_FILENAME) . '.' . pathinfo($avatar['name'], PATHINFO_EXTENSION);
             }
             else {
                 $filename = 'avatar-placeholder.png';
             }
-            $destination = '../upload/avatar' . '/' . $filename;
+            $destination = realpath(__DIR__ . '/../upload/avatar');
             try {
-                move_uploaded_file($avatar['tmp_name'], $destination);/*Не работает на сервере ЗВА*/
-                $accountAvatar = $destination;
+                move_uploaded_file($avatar['tmp_name'], $destination . '/' . $filename);/*Не работает на сервере ЗВА*/
+                $accountAvatar = 'upload/avatar/' . $filename;
             }
             catch (PDOException $e) {}
             return new account($firstName, $lastName, $username, $email, $accountPassword, $accountAvatar);
@@ -70,22 +70,20 @@ class validator {
         if (! preg_match('/^[a-zA-Z0-9\s_!.,():;?-]{20,5000}$/', $description)) self::$errors[] = "Description must be at least 20 characters";
         if (! preg_match('/^[a-zA-Z0-9\s_!.,():;?-]{20,255}$/', $howto)) self::$errors[] = "How to must be at least 20 characters";
         if (! preg_match('/^[a-zA-Z0-9\s_!.,():;?-]{20,255}$/', $ingredients)) self::$errors[] = "Ingredients must be at least 20 characters";
-        if (count($image) > 5) $this->validateImage($image);
+        if (count($image) > 7) $this->validateImage($image);
         if (count(self::$errors) < 1) {
-            if (count($image) > 5) {
+            if (count($image) > 7) {
                 $filename = str_replace(' ', '-', $recipeName) . '-' . pathinfo($image['name'], PATHINFO_FILENAME) . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
             }
             else {
                 $filename = 'recipe-placeholder.png';
             }
-            $destination = '../upload/recipe' . '/' . $filename;
+            $destination = realpath(__DIR__ . '/../upload/recipe/');
             try {
-                move_uploaded_file($image['tmp_name'], $destination);/*Не работает на сервере ЗВА*/
-                $recipeImage = $destination;
+                move_uploaded_file($image['tmp_name'], $destination . '/' . $filename);
+                $recipeImage = 'upload/recipe/' . $filename;
             }
-            catch (PDOException $e) {
-                $recipeImage = '../upload/recipe/recipe-placeholder.png';
-            }
+            catch (PDOException $e) {}
             return new recipe($recipeName, $description, $howto, $ingredients, $recipeImage);
         }
         else return null;

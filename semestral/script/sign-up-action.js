@@ -1,15 +1,17 @@
-import {addListenerToDocument, sendRequest, setOnChange, validate} from "/script/functions.js";
+import {addListenerToDocument, sendRequest, setOnChange, validate} from "./functions";
 
 setup();
 
 function signupOperation() {
     const formData = new FormData(document.getElementById('signup-form'));
     if (formValidation(document)) {
-        if (document.cookie == null) {
-            sendRequest(formData, 'POST', '../function/sign-up-action.php',
+        if (document.cookie.length < 1) {
+            console.log(document.cookie);
+            sendRequest(formData, 'POST', 'function/sign-up-action.php',
                 "Account was successfully created");
         }
         else {
+            console.log('cookie is null');
             const jsonObject = {};
             formData.forEach((value, key) => {
                 if (jsonObject[key]) {
@@ -20,8 +22,8 @@ function signupOperation() {
             });
             jsonObject['username'] = document.getElementById('username').value;
             const jsonData = JSON.stringify(jsonObject);
-            sendRequest(jsonData, 'PUT', '../function/sign-up-action.php',
-                "Account was successfully updated")
+             sendRequest(jsonData, 'PUT', 'function/sign-up-action.php',
+                 "Account was successfully updated")
         }
     }
 }
@@ -65,7 +67,6 @@ function formValidation(form) {
     if (errorField.innerHTML.length > 0) {
         result = false;
     }
-    else console.log(errorField.innerHTML);
     return result;
 }
 

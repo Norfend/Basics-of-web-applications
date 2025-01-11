@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 namespace entities\builder;
-require_once $_SERVER['DOCUMENT_ROOT'] . '/entities/accountDTO.php';
+require_once __DIR__ . '/../accountDTO.php';
 use entities\account;
 use entities\accountDTO;
 
