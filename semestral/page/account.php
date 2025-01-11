@@ -31,7 +31,8 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';?>
             <h1 class="account-user-name"><?= htmlspecialchars($user->getUsername()) ?></h1>
             <p>First Name: <?= htmlspecialchars($user->getFirstName()) ?></p>
             <p>Last Name: <?= htmlspecialchars($user->getLastName()) ?></p>
-            <p>Email: <?= htmlspecialchars($user->getEmail()) ?></p>
+            <p>E-mail: <?= htmlspecialchars($user->getEmail()) ?></p>
+            <a href="/page/sign-up.php" class="account-edit-button">Edit Account</a>
         </div>
     </section>
     <section class="account-recipes">

@@ -42,10 +42,10 @@ class validator {
         if (! $this->validateEmail($email)) self::$errors[] = "Email is invalid";
         if (! $this->validatePassword($password)) self::$errors[] = "Password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, and one number";
         if ($password !== $confirm_password) self::$errors[] = "Passwords don't match";
-        if (count($avatar) > 6) $this->validateImage($avatar);
+        if (count($avatar) > 5) $this->validateImage($avatar);
         if (count(self::$errors) < 1) {
             $accountPassword = password_hash($password, PASSWORD_BCRYPT);
-            if (count($avatar) > 6) {
+            if (count($avatar) > 5) {
                 $filename = $username . '-' . pathinfo($avatar['name'], PATHINFO_FILENAME) . '.' . pathinfo($avatar['name'], PATHINFO_EXTENSION);
             }
             else {
@@ -70,10 +70,10 @@ class validator {
         if (! preg_match('/^[a-zA-Z0-9\s_!.,():;?-]{20,5000}$/', $description)) self::$errors[] = "Description must be at least 20 characters";
         if (! preg_match('/^[a-zA-Z0-9\s_!.,():;?-]{20,255}$/', $howto)) self::$errors[] = "How to must be at least 20 characters";
         if (! preg_match('/^[a-zA-Z0-9\s_!.,():;?-]{20,255}$/', $ingredients)) self::$errors[] = "Ingredients must be at least 20 characters";
-        if (count($image) > 6) $this->validateImage($image);
+        if (count($image) > 5) $this->validateImage($image);
         if (count(self::$errors) < 1) {
-            if (count($image) > 6) {
-                $filename = $recipeName . '-' . pathinfo($image['name'], PATHINFO_FILENAME) . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
+            if (count($image) > 5) {
+                $filename = str_replace(' ', '-', $recipeName) . '-' . pathinfo($image['name'], PATHINFO_FILENAME) . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
             }
             else {
                 $filename = 'recipe-placeholder.png';

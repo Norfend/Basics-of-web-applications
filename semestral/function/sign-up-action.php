@@ -5,8 +5,10 @@ namespace function;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/configuration/database_connection.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/function/validator.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/function/cookie.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/repository/accountRepository.php';
 use \configuration\database_connection;
 use PDOException;
+use repository\accountRepository;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $validator = validator::getInstance();
@@ -24,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$account->getFirstName(), $account->getLastName(), $account->getUsername(),
                 $account->getEmail(), $account->getPassword(), $account->getAvatar()]);
             $cookieData = [
-                'username' => $account['username'],
-                'avatar' => $account['avatar']
+                'user' => $account->getUsername(),
+                'avatar' => $account->getAvatar()
             ];
             cookie::set('username', $cookieData, 1);
             echo 'Success';
@@ -38,4 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo $error . "\n";
         }
     }
+}
+else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $validator = validator::getInstance();
+    $connection = database_connection::getInstance()->getConnection();
+
+    $input = json_decode(file_get_contents('php://input'), true);
+    accountRepository::updateAccount($input);
+    echo 'Success';
 }
