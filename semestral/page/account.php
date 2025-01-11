@@ -13,11 +13,6 @@ if (isset($_COOKIE['username'])) {
     }
 }
 
-if (!$username) {
-    header('Location: /page/sign-in.php');
-    exit();
-}
-
 $user = accountRepository::getAccountByUsername($username);
 $recipes = recipeRepository::getRecipesByAuthor(accountRepository::getUserIdByUsername($username));
 require_once $_SERVER['DOCUMENT_ROOT'] . '/component/header.php';?>

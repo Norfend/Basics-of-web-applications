@@ -6,6 +6,7 @@ namespace repository;
 use entities\recipe;
 use PDO;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/configuration/database_connection.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/entities/recipe.php';
 use \configuration\database_connection;
 
 class recipeRepository
@@ -46,5 +47,15 @@ class recipeRepository
 
         $stmt->execute([$author]);
         return $stmt->fetchAll();
+    }
+
+    public static function getRecipeById(int $id): recipe
+    {
+        self::initConnection();
+        $stmt = self::$databaseConnection->prepare('SELECT * FROM recipe WHERE recipe_id = ?');
+
+        $stmt->execute([$id]);
+        $fetch = $stmt->fetch();
+        return new recipe($fetch['recipe_name'], $fetch['description'], $fetch['howto'], $fetch['ingredients'], $fetch['image']);
     }
 }
