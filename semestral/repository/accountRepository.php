@@ -61,10 +61,20 @@ class accountRepository
         }
     }
 
-    public static function deleteAccountByUsername(string $username) :void
+    public static function deleteAccountByUsername(string $username): void
     {
         self::initConnection();
         $stmt = self::$databaseConnection->prepare('DELETE FROM user WHERE username = ?');
         $stmt->execute([$username]);
+    }
+
+    public static function checkUserPrivileges(string $username): bool
+    {
+        self::initConnection();
+        $stmt = self::$databaseConnection->prepare('SELECT super_user FROM user WHERE username = ?');
+        $stmt->execute([$username]);
+        $result = $stmt->fetch();
+        if ($result === 0) return false;
+        else return true;
     }
 }

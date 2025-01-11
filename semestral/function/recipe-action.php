@@ -6,9 +6,11 @@ require_once __DIR__ . '/../configuration/database_connection.php';
 require_once __DIR__ . '/validator.php';
 require_once __DIR__ . '/cookie.php';
 require_once __DIR__ . '/../repository/accountRepository.php';
+require_once __DIR__ . '/../repository/recipeRepository.php';
 use \configuration\database_connection;
 use \repository\accountRepository;
 use PDOException;
+use repository\recipeRepository;
 use RuntimeException;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -41,4 +43,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo $error . "\n";
         }
     }
+}
+else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $input = json_decode(file_get_contents('php://input'), true);
+
+    $userId = accountRepository::getUserIdByUsername($input['username']);
+    $userPrivileges = accountRepository::checkUserPrivileges($input['username']);
+    $recipeAuthor = recipeRepository::getAuthorById($userId);
+
+    if ($userId === $recipeAuthor) {
+        recipeRepository::deleteRecipeById((int)$input['recipe_id']);
+        echo 'Success';
+    }
+    elseif ($userPrivileges === true) {
+        recipeRepository::deleteRecipeById((int)$input['recipe_id']);
+        echo 'Success';
+    }
+    else echo 'Restricted';
 }

@@ -23,7 +23,7 @@ require_once __DIR__ . '/../component/header.php';?>
             <img src="<?= htmlspecialchars($user->getAvatar()) ?>" alt="User Avatar">
         </div>
         <div class="account-info">
-            <h1 class="account-user-name"><?= htmlspecialchars($user->getUsername()) ?></h1>
+            <h1 class="account-user-name" id="username"><?= htmlspecialchars($user->getUsername()) ?></h1>
             <p>First Name: <?= htmlspecialchars($user->getFirstName()) ?></p>
             <p>Last Name: <?= htmlspecialchars($user->getLastName()) ?></p>
             <p>E-mail: <?= htmlspecialchars($user->getEmail()) ?></p>
@@ -35,16 +35,13 @@ require_once __DIR__ . '/../component/header.php';?>
         <?php if (!empty($recipes)): ?>
             <ul class="account-recipe-list">
                 <?php foreach ($recipes as $recipe): ?>
-                    <li class="account-recipe-item">
-                        <a href="page/recipe-view.php?id=<?= $recipe['recipe_id'] ?>" class="account-recipe-link">
+                    <li class="account-recipe-item" data-id="<?= $recipe['recipe_id'] ?>">
+                        <a href="page/recipe-view.php? id=<?=$recipe['recipe_id']?>" class="account-recipe-link">
                             <h3><?= htmlspecialchars($recipe['recipe_name']) ?></h3>
                         </a>
                         <div class="account-recipe-actions">
-                            <a href="page/recipe-view.php?id=<?= $recipe['recipe_id'] ?>" class="account-edit-button">Edit</a>
-                            <form action="function/delete-recipe.php" method="POST" class="account-delete-form">
-                                <input type="hidden" name="recipe_id" value="<?= $recipe['recipe_id'] ?>">
-                                <button type="submit" class="account-delete-button">Delete</button>
-                            </form>
+                            <a href="javascript:void(0);" class="recipe-edit-button" data-id="<?=$recipe['recipe_id']?>">Edit</a>
+                            <a href="javascript:void(0);" class="recipe-delete-button" data-id="<?=$recipe['recipe_id']?>">Delete</a>
                         </div>
                     </li>
                 <?php endforeach; ?>
@@ -54,5 +51,6 @@ require_once __DIR__ . '/../component/header.php';?>
         <?php endif; ?>
     </section>
 </main>
+<script type="module" src="script/account-action.js"></script>
 
 <?php require_once __DIR__ . '/../component/footer.php';?>

@@ -58,4 +58,21 @@ class recipeRepository
         $fetch = $stmt->fetch();
         return new recipe($fetch['recipe_name'], $fetch['description'], $fetch['howto'], $fetch['ingredients'], $fetch['image']);
     }
+
+    public static function deleteRecipeById(int $id): void
+    {
+        self::initConnection();
+        $stmt = self::$databaseConnection->prepare('DELETE FROM recipe WHERE recipe_id = ?');
+        $stmt->execute([$id]);
+    }
+
+    public static function getAuthorById(int $authorId): int
+    {
+        self::initConnection();
+        $stmt = self::$databaseConnection->prepare('SELECT author FROM recipe WHERE author = ?');
+
+        $stmt->execute([$authorId]);
+        $result = $stmt->fetch();
+        return $result['author'];
+    }
 }

@@ -21,8 +21,7 @@ function signupOperation() {
                 }
             });
             jsonObject['username'] = document.getElementById('username').value;
-            const jsonData = JSON.stringify(jsonObject);
-             sendRequest(jsonData, 'PUT', 'function/sign-up-action.php',
+            sendRequest(JSON.stringify(jsonObject), 'PUT', 'function/sign-up-action.php',
                  "Account was successfully updated")
         }
     }

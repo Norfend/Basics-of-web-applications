@@ -14,12 +14,12 @@ $totalPages = (int)ceil($totalRecipes / $pageSize);
 ?>
 
 <main class="main-content">
-    <section id="recipes-section" class="recipes">
+    <section id="recipes-section" class="recipes-list">
         <?php foreach ($recipes as $recipe): ?>
-            <a href="/page/recipe-view.php?id=<?= $recipe['recipe_id'] ?>" class="recipe-card-link">
+            <a href="page/recipe-view.php?id=<?= $recipe['recipe_id'] ?>" class="recipe-card-link">
                 <div class="recipe-card">
                     <div class="recipe-image">
-                        <img src="<?= htmlspecialchars($recipe['image']) ?>" alt="<?= htmlspecialchars($recipe['recipe_name']) ?>">
+                        <img src="<?= htmlspecialchars($recipe['image']) ?>" alt="<?= htmlspecialchars(str_replace(' ', '-', $recipe['recipe_name']))?>">
                     </div>
                     <div class="recipe-details">
                         <h2><?= htmlspecialchars($recipe['recipe_name']) ?></h2>
