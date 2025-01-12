@@ -81,7 +81,12 @@ else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
     $userId = accountRepository::getUserIdByUsername($input['username']);
     $userPrivileges = accountRepository::checkUserPrivileges($input['username']);
-    $recipeAuthor = recipeRepository::getAuthorById($userId);
+    if (!$userPrivileges) {
+        $recipeAuthor = recipeRepository::getAuthorById($userId);
+    }
+    else {
+        $recipeAuthor = null;
+    }
 
     if ($userId === $recipeAuthor) {
         recipeRepository::deleteRecipeById((int)$input['recipe_id']);

@@ -71,3 +71,15 @@ else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     accountRepository::updateAccount($input);
     echo 'Success';
 }
+else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $input = json_decode(file_get_contents('php://input'), true);
+    $username = $input['username'];
+    $userPrivileges = accountRepository::checkUserPrivileges($username);
+
+    if ($userPrivileges) {
+        accountRepository::deleteAccountById((int) $input['user_id']);
+        echo 'Success';
+    } else {
+        echo 'Restricted';
+    }
+}

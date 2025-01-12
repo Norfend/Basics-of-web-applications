@@ -111,13 +111,13 @@ class accountRepository
      *
      * This method removes the user record from the database based on the provided username.
      *
-     * @param string $username The username of the account to delete.
+     * @param string $id The username of the account to delete.
      */
-    public static function deleteAccountByUsername(string $username): void
+    public static function deleteAccountById(int $id): void
     {
         self::initConnection();
-        $stmt = self::$databaseConnection->prepare('DELETE FROM user WHERE username = ?');
-        $stmt->execute([$username]);
+        $stmt = self::$databaseConnection->prepare('DELETE FROM user WHERE user_id = ?');
+        $stmt->execute([$id]);
     }
 
     /**
@@ -135,8 +135,16 @@ class accountRepository
         self::initConnection();
         $stmt = self::$databaseConnection->prepare('SELECT super_user FROM user WHERE username = ?');
         $stmt->execute([$username]);
-        $result = $stmt->fetch();
+        $result = $stmt->fetch()['super_user'];
         if ($result === 0) return false;
         else return true;
+    }
+
+    public static function getAllUsers(): array
+    {
+        self::initConnection();
+        $stmt = self::$databaseConnection->prepare('SELECT * FROM user WHERE super_user = 0');
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }

@@ -22,11 +22,13 @@ function recipeValidation() {
     const formData = new FormData(document.getElementById('recipe-form'));
     const urlParams = new URLSearchParams(window.location.search);
     if (formValidation(document)) {
-        if (! urlParams.has('edit') && urlParams.get('edit') === 'true') {
+        if (!(urlParams.has('edit') && urlParams.get('edit') === 'true')) {
             sendRequest(formData, 'POST', 'function/recipe-action.php',
                 "Recipe was successfully created");
         }
         else {
+            console.log(urlParams.has('edit'));
+            console.log(urlParams.get('edit') === 'true');
             const jsonObject = {};
             jsonObject['recipe_id'] = urlParams.get('id');
             formData.forEach((value, key) => {
@@ -53,7 +55,7 @@ function recipeValidation() {
  * @returns {boolean} - Returns `true` if the form is valid, otherwise `false`.
  */
 function formValidation(form) {
-    const recipeNameField = form.getElementById('recipe_name');
+    const recipeNameField = form.getElementById('recipe-name');
     const descriptionField = form.getElementById('description');
     const howtoField = form.getElementById('howto');
     const ingredientsField = form.getElementById('ingredients');
@@ -87,7 +89,7 @@ function formValidation(form) {
  */
 function setup() {
     addListenerToDocument(document, 'recipe-form', recipeValidation);
-    setOnChange(document.getElementById('recipe_name'));
+    setOnChange(document.getElementById('recipe-name'));
     setOnChange(document.getElementById('description'));
     setOnChange(document.getElementById('howto'));
     setOnChange(document.getElementById('ingredients'));

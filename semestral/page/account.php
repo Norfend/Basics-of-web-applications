@@ -14,7 +14,14 @@ if (isset($_COOKIE['username'])) {
 }
 
 $user = accountRepository::getAccountByUsername($username);
-$recipes = recipeRepository::getRecipesByAuthor(accountRepository::getUserIdByUsername($username));
+$isSuperUser = accountRepository::checkUserPrivileges($username);
+if ($isSuperUser) {
+    $accounts = accountRepository::getAllUsers();
+    $recipes = recipeRepository::getAllRecipes();
+}
+else {
+    $recipes = recipeRepository::getRecipesByAuthor(accountRepository::getUserIdByUsername($username));
+}
 require_once __DIR__ . '/../component/header.php';?>
 
 <main class="main-content">
@@ -30,13 +37,21 @@ require_once __DIR__ . '/../component/header.php';?>
             <a href="page/sign-up.php" class="account-edit-button">Edit Account</a>
         </div>
     </section>
-    <section class="account-recipes">
-        <h2>Your Recipes</h2>
+
+    <?php if ($isSuperUser): ?>
+        <section class="account-toggle">
+            <button id="show-recipes">Show Recipe List</button>
+            <button id="show-accounts">Show Account List</button>
+        </section>
+    <?php endif; ?>
+
+    <section class="account-recipes" id="recipes-section">
+        <h2>Recipes</h2>
         <?php if (!empty($recipes)): ?>
             <ul class="account-recipe-list">
                 <?php foreach ($recipes as $recipe): ?>
                     <li class="account-recipe-item" data-id="<?= $recipe['recipe_id'] ?>">
-                        <a href="page/recipe-view.php? id=<?=$recipe['recipe_id']?>" class="account-recipe-link">
+                        <a href="page/recipe-view.php?id=<?=$recipe['recipe_id']?>" class="account-recipe-link">
                             <h3><?= htmlspecialchars($recipe['recipe_name']) ?></h3>
                         </a>
                         <div class="account-recipe-actions">
@@ -50,6 +65,27 @@ require_once __DIR__ . '/../component/header.php';?>
             <p>You haven't created any recipes yet. <a href="page/recipe.php">Create one now!</a></p>
         <?php endif; ?>
     </section>
+
+    <?php if ($isSuperUser): ?>
+        <section class="account-recipes" id="accounts-section" style="display: none;">
+            <h2>Accounts</h2>
+            <?php if (!empty($accounts)): ?>
+                <ul class="account-recipe-list">
+                    <?php foreach ($accounts as $account): ?>
+                        <li class="account-recipe-item" data-id="<?= $account['user_id'] ?>">
+                            <h3><?= htmlspecialchars($account['username']) ?></h3>
+                            <div class="account-recipe-actions">
+                                <a href="javascript:void(0);" class="account-edit-button" data-id="<?= $account['user_id'] ?>">Edit</a>
+                                <a href="javascript:void(0);" class="account-delete-button" data-id="<?= $account['user_id'] ?>">Delete</a>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p>No accounts found.</p>
+            <?php endif; ?>
+        </section>
+    <?php endif; ?>
 </main>
 <script type="module" src="script/account-action.js"></script>
 

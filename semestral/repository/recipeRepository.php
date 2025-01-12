@@ -145,10 +145,26 @@ class recipeRepository
         return $result['author'];
     }
 
+    /**
+     * Updates a recipe in the database by its ID.
+     *
+     * This method updates the details of a recipe in the `recipe` table. It
+     * updates the `recipe_name`, `description`, `howto`, and `ingredients` fields
+     * of the specified recipe using the given recipe ID.
+     *
+     * @param array $recipe An associative array containing the recipe data to be updated:
+     *                      - 'recipe_name': The name of the recipe.
+     *                      - 'description': A description of the recipe.
+     *                      - 'howto': Instructions on how to make the recipe.
+     *                      - 'ingredients': A list of ingredients for the recipe.
+     * @param int|string $recipeId The unique ID of the recipe to update.
+     *
+     * @return void
+     */
     public static function updateRecipeById(array $recipe, $recipeId): void
     {
         self::initConnection();
         $stmt = self::$databaseConnection->prepare('UPDATE recipe SET recipe_name = ?, description = ?, howto = ?, ingredients = ? WHERE recipe_id = ?');
-        $stmt->execute([$recipe['recipe_name'], $recipe['description'], $recipe['howto'], $recipe['ingredients'], $recipeId]);
+        $stmt->execute([$recipe['recipe-name'], $recipe['description'], $recipe['howto'], $recipe['ingredients'], $recipeId]);
     }
 }

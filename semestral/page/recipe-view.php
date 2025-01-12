@@ -18,8 +18,8 @@ $isUpdate = isset($_GET['edit']) && $_GET['edit'] === 'true';
     <form id="recipe-form" action="" method="POST" enctype="multipart/form-data" class="recipe-view">
         <?php if ($isUpdate): ?>
             <h1>Edit Recipe</h1>
-            <label for="recipe_name">Recipe Name:</label>
-            <input type="text" id="recipe_name" name="recipe_name" value="<?= htmlspecialchars($recipe->getRecipeName()) ?>" autocomplete="no">
+            <label for="recipe-name">Recipe Name:</label>
+            <input type="text" id="recipe-name" name="recipe-name" value="<?= htmlspecialchars($recipe->getRecipeName()) ?>" autocomplete="no">
             <label for="description">Description:</label>
             <textarea id="description" name="description"><?= htmlspecialchars($recipe->getDescription()) ?></textarea>
             <label for="ingredients">Ingredients:</label>
