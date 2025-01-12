@@ -40,8 +40,8 @@ require_once __DIR__ . '/../component/header.php';?>
                             <h3><?= htmlspecialchars($recipe['recipe_name']) ?></h3>
                         </a>
                         <div class="account-recipe-actions">
-                            <a href="" class="recipe-edit-button" data-id="<?=$recipe['recipe_id']?>">Edit</a>
-                            <a href="" class="recipe-delete-button" data-id="<?=$recipe['recipe_id']?>">Delete</a>
+                            <a href="javascript:void(0);" class="recipe-edit-button" data-id="<?=$recipe['recipe_id']?>">Edit</a>
+                            <a href="javascript:void(0);" class="recipe-delete-button" data-id="<?=$recipe['recipe_id']?>">Delete</a>
                         </div>
                     </li>
                 <?php endforeach; ?>

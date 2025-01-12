@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     editButtons.forEach(button => {
         button.addEventListener('click', function() {
             const recipeId = button.getAttribute('data-id');
-            window.location.href = `page/recipe-edit.php?id=${recipeId}`;
+            window.location.href = `page/recipe-view.php?id=${recipeId}&edit=true`;
         });
     });
 

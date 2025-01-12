@@ -144,4 +144,11 @@ class recipeRepository
         $result = $stmt->fetch();
         return $result['author'];
     }
+
+    public static function updateRecipeById(array $recipe, $recipeId): void
+    {
+        self::initConnection();
+        $stmt = self::$databaseConnection->prepare('UPDATE recipe SET recipe_name = ?, description = ?, howto = ?, ingredients = ? WHERE recipe_id = ?');
+        $stmt->execute([$recipe['recipe_name'], $recipe['description'], $recipe['howto'], $recipe['ingredients'], $recipeId]);
+    }
 }

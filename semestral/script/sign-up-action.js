@@ -23,12 +23,10 @@ function signupOperation() {
     const formData = new FormData(document.getElementById('signup-form'));
     if (formValidation(document)) {
         if (document.cookie.length < 1) {
-            console.log(document.cookie);
             sendRequest(formData, 'POST', 'function/sign-up-action.php',
                 "Account was successfully created");
         }
         else {
-            console.log('cookie is null');
             const jsonObject = {};
             formData.forEach((value, key) => {
                 if (jsonObject[key]) {
