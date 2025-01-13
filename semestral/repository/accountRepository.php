@@ -62,6 +62,20 @@ class accountRepository
         return null;
     }
 
+    public static function getAccountById(int $id): ?accountDTO
+    {
+        self::initConnection();
+        $stmt = self::$databaseConnection->prepare('SELECT * FROM user WHERE user_id = ?');
+
+        $stmt->execute([$id]);
+        $results = $stmt->fetchAll();
+
+        if (count($results) === 1) {
+            return accountBuilder::toDTO($results[0]);
+        }
+        return null;
+    }
+
     /**
      * Retrieves the user ID by the username.
      *

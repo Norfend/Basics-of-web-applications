@@ -22,8 +22,17 @@ setup();
 function signupOperation() {
     const formData = new FormData(document.getElementById('signup-form'));
     if (formValidation(document)) {
-        sendRequest(formData, 'POST', 'function/sign-up-action.php',
-            "Account was successfully created");
+        const jsonObject = {};
+        formData.forEach((value, key) => {
+            if (jsonObject[key]) {
+                jsonObject[key] = [].concat(jsonObject[key], value);
+            } else {
+                jsonObject[key] = value;
+            }
+        });
+        jsonObject['username'] = document.getElementById('username').value;
+        sendRequest(JSON.stringify(jsonObject), 'PUT', 'function/sign-up-action.php',
+            "Account was successfully updated");
     }
 }
 
@@ -55,12 +64,14 @@ function formValidation(form) {
     validate(usernameField, '^[a-zA-Z0-9_]{6,255}$', errorField,
         '<div class="error">Username must be at least 6 characters long and contain only letters and numbers</div>');
     validate(emailField, '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$', errorField, '<div class="error">Email is invalid</div>');
-    if (passwordField.value !== confirmPasswordField.value || confirmPasswordField.value === '') {
+    if (passwordField.value !== confirmPasswordField.value) {
         confirmPasswordField.classList.add('invalid');
         errorField.innerHTML += '<div class="error">Passwords don\'t match</div>';
     }
-    validate(passwordField, '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,}$', errorField,
-        '<div class="error">Password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, and one number</div>');
+    else if(passwordField.value !== '' || confirmPasswordField.value !== '') {
+        validate(passwordField, '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,}$', errorField,
+            '<div class="error">Password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, and one number</div>');
+    }
 
     if (errorField.innerHTML.length > 0) {
         result = false;
@@ -77,6 +88,10 @@ function formValidation(form) {
  * @returns {void}
  */
 function setup() {
+    if (document.getElementById('username').value === '') {
+        alert('Account ID not received');
+        window.location.href = "";
+    }
     addListenerToDocument(document, 'signup-form', signupOperation);
     setOnChange(document.getElementById('first_name'));
     setOnChange(document.getElementById('last_name'));

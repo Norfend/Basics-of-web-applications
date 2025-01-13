@@ -71,12 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
      * Loops through each edit button, and when clicked, it retrieves the account ID
      * and redirects the user to the account edit page.
      */
-/*    editAccountButtons.forEach(button => {
+    editAccountButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const recipeId = button.getAttribute('data-id');
-            window.location.href = `page/recipe-view.php?id=${recipeId}&edit=true`;
+            const userId = button.getAttribute('data-id');
+            window.location.href = `page/account-edit.php?id=${userId}`;
         });
-    });*/
+    });
 
     /**
      * Event listener for account delete buttons.

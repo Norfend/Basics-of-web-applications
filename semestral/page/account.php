@@ -15,6 +15,7 @@ if (isset($_COOKIE['username'])) {
 
 $user = accountRepository::getAccountByUsername($username);
 $isSuperUser = accountRepository::checkUserPrivileges($username);
+$user_id = accountRepository::getUserIdByUsername($username);
 if ($isSuperUser) {
     $accounts = accountRepository::getAllUsers();
     $recipes = recipeRepository::getAllRecipes();
@@ -34,7 +35,7 @@ require_once __DIR__ . '/../component/header.php';?>
             <p>First Name: <?= htmlspecialchars($user->getFirstName()) ?></p>
             <p>Last Name: <?= htmlspecialchars($user->getLastName()) ?></p>
             <p>E-mail: <?= htmlspecialchars($user->getEmail()) ?></p>
-            <a href="page/sign-up.php" class="account-edit-button">Edit Account</a>
+            <a href="<?= htmlspecialchars('page/account-edit.php?id=' . $user_id) ?>" class="account-edit-button">Edit Account</a>
         </div>
     </section>
 
